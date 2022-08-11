@@ -1,0 +1,32 @@
+.section {
+    width: 600px; /*move to index.css*/
+    box-sizing: border-box;
+}
+
+.list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: calc(100vh - 324px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+    background: #2F2F37;;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.priceContainer {
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+}
+
