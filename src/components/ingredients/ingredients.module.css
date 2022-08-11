@@ -1,35 +1,13 @@
-.section {
-    width: 600px;
-}
-
-.list {
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-}
-
 .itemsList {
-    composes: list;
     margin: 0;
-    height: calc(100vh - 324px);
+    height: 600px;
     overflow-y: scroll;
     overflow-x: hidden;
     flex-direction: column;
     gap: 40px;
 }
 
-
-.itemsList::-webkit-scrollbar {
-    width: 8px;
-    background: #2F2F37;;
-}
-
-.itemsList::-webkit-scrollbar-thumb {
-    background: #8585AD;
-}
-
 .ingredientsList {
-    composes: list;
     flex-wrap: wrap;
     row-gap: 32px;
     column-gap: 24px;

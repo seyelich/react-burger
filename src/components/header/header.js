@@ -5,7 +5,7 @@ export default function AppHeader() {
     return (
         <header className={headerStyles.header}>
             <nav>
-                <ul className={headerStyles.list}>
+                <ul className={`${headerStyles.list} default-list`}>
                     <li className={`${headerStyles.item} mr-7 ml-5`}>
                         <BurgerIcon type="primary"/>
                         <a className="text text_type_main-default ml-2">Конструктор</a>
@@ -20,7 +20,7 @@ export default function AppHeader() {
                     </li>
                 </ul>
             </nav>
-            <span className={headerStyles.logo}><Logo /></span> {/* пришлось обернуть в спан, т.к. класснэйм у лого не работает почему-то*/}
+            <span className={headerStyles.logo}><Logo /></span>
         </header>
     )
 }

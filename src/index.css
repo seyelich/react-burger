@@ -1,0 +1,19 @@
+.default-section {
+    width: 600px;
+    box-sizing: border-box;
+}
+
+.default-list {
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: #2F2F37;;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}

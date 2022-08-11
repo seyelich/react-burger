@@ -1,41 +1,66 @@
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './constructor.module.css'
 import PriceContainer from "../price/price"
 import ConstructorItem from "../constructor-item/constructor-item";
+import PropTypes from 'prop-types';
 
 export default function BurgerConsrtuctor({data}) {
-    const total = data.reduce((acc, i) => acc + i.price * i.count, 0);
-
-    const renderItem = (item, index) => {
-        const arr = [];
-        for(let i = 0; i<item.count; i++) {
-            arr.push(<ConstructorItem item={item} text={item.name} key={index} />)
-        }
-        //console.log(arr)
-        return arr
-    }
-
     return (
-        <section className={`${styles.section} pl-4 mt-25`}>
-            <ul className={styles.list}>
-                {data.map((el, index, arr) => {
-                        if(index === 0) {
-                            return <ConstructorItem item={el} text={`${el.name} (верх)`} type="top" key={index} />
-                        }
-                        else if(index === arr.length -1 ) {
-                            return <ConstructorItem item={el} text={`${el.name} (низ)`} type="bottom" key={index} />
-                        }
-
-                        if(el.type !== 'bun') {
-                            return renderItem(el, index)
-                        }
-                })}
+        <section className="default-section pl-4 mt-25">
+            <div className={`${styles.container} mr-4 mb-4`}>
+                <ConstructorElement
+                    type="top"
+                    isLocked={true}
+                    text={`${data[0].name} (верх)`}
+                    price={data[0].price}
+                    thumbnail={data[0].image}
+                    className={`${styles.item} ml-8`}
+                />
+            </div>
+        
+            <ul className={`${styles.list} default-list`}>
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
+                <ConstructorItem item={data[1]} />
             </ul>
+    
+            <div className={`${styles.container} mr-4 mt-4`}>
+                <ConstructorElement
+                    type="bottom"
+                    isLocked={true}
+                    text={`${data[0].name} (низ)`}
+                    price={data[0].price}
+                    thumbnail={data[0].image}
+                    className={`${styles.item} ml-8`}
+                />
+            </div>
 
             <div className={`${styles.priceContainer} mt-10 mr-4`}>
-                <PriceContainer total={total} />
+                <PriceContainer total={610} />
                 <Button type="primary" size="large">Оформить заказ</Button>
             </div>
         </section>
     )
+}
+
+BurgerConsrtuctor.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
+		proteins: PropTypes.number.isRequired,
+		fat: PropTypes.number.isRequired,
+		carbohydrates: PropTypes.number.isRequired,
+		calories: PropTypes.number.isRequired,
+		price: PropTypes.number.isRequired,
+		image: PropTypes.string.isRequired,
+		image_mobile: PropTypes.string.isRequired,
+		image_large: PropTypes.string.isRequired,
+		__v: PropTypes.number,
+	})).isRequired
 }
