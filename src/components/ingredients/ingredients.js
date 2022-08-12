@@ -1,8 +1,8 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import React from 'react';
-import BurgerIngredient from '../ingredient/ingredient'
 import ingredientsStyles from './ingredients.module.css';
-import PropTypes from 'prop-types';
+import { dataPropTypes } from '../utils/types';
+import filterData from '../utils/utils';
 
 
 export default function BurgerIngredients({ data }) {
@@ -35,30 +35,21 @@ export default function BurgerIngredients({ data }) {
                 <li id="buns">
                     <h3 className="text text_type_main-medium">Булки</h3>
                     <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        {data
-                            .filter((item) => item.type === 'bun')
-                            .map((el) => <BurgerIngredient key={el._id} item={el} />)
-                        }
+                        { filterData('bun') }
                     </ul>
                 </li>
 
                 <li id="sauces">
                     <h3 className="text text_type_main-medium">Соусы</h3>
                     <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                    {data
-                            .filter((item) => item.type === 'sauce')
-                            .map((el) => <BurgerIngredient key={el._id} item={el} />)
-                        }
+                        { filterData('sauce') }
                     </ul>
                 </li>
 
                 <li id="fillings">
                     <h3 className="text text_type_main-medium">Начинка</h3>
                     <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                    {data
-                            .filter((item) => item.type === 'main')
-                            .map((el) => <BurgerIngredient key={el._id} item={el} />)
-                        }
+                        { filterData('main') }
                     </ul>
                 </li>
             </ul>
@@ -67,18 +58,5 @@ export default function BurgerIngredients({ data }) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		proteins: PropTypes.number.isRequired,
-		fat: PropTypes.number.isRequired,
-		carbohydrates: PropTypes.number.isRequired,
-		calories: PropTypes.number.isRequired,
-		price: PropTypes.number.isRequired,
-		image: PropTypes.string.isRequired,
-		image_mobile: PropTypes.string.isRequired,
-		image_large: PropTypes.string.isRequired,
-		__v: PropTypes.number,
-	})).isRequired
+    data: dataPropTypes.isRequired
 }
