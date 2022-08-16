@@ -2,6 +2,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import ingredientStyles from './ingredient.module.css';
 import { itemPropTypes } from '../utils/types';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import PropTypes from 'prop-types';
 
 export default function BurgerIngredient({item, handleOpenModal, handleCloseModal, visibility}) {
     const modal = (
@@ -23,5 +24,8 @@ export default function BurgerIngredient({item, handleOpenModal, handleCloseModa
 }
 
 BurgerIngredient.propTypes = {
-    item: itemPropTypes.isRequired
+    item: itemPropTypes.isRequired,
+    handleOpenModal: PropTypes.func.isRequired,
+    handleCloseModal: PropTypes.func.isRequired,
+    visibility: PropTypes.bool.isRequired
 }

@@ -1,6 +1,8 @@
 import Modal from "../modal/modal";
 import img from "../../images/done.png";
-import styles from './order-details.module.css'
+import styles from './order-details.module.css';
+import PropTypes from 'prop-types';
+import { dataPropTypes } from "../utils/types";
 
 export default function OrderDetails({data, handleClose}) {
     return (
@@ -12,4 +14,9 @@ export default function OrderDetails({data, handleClose}) {
             <p className="text text text_type_main-default text_color_inactive mb-30">Дождитесь готовности на орбитальной станции</p>
         </Modal>
     )
+}
+
+OrderDetails.propTypes = {
+    data: dataPropTypes.isRequired,
+    handleClose: PropTypes.func.isRequired,
 }

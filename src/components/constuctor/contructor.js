@@ -4,6 +4,7 @@ import PriceContainer from "../price/price"
 import ConstructorItem from "../constructor-item/constructor-item";
 import { dataPropTypes } from "../utils/types";
 import OrderDetails from "../order-details/order-details";
+import PropTypes from 'prop-types';
 
 export default function BurgerConsrtuctor({data, handleOpenModal, handleCloseModal, visibility}) {
     const modal = (
@@ -60,5 +61,8 @@ export default function BurgerConsrtuctor({data, handleOpenModal, handleCloseMod
 }
 
 BurgerConsrtuctor.propTypes = {
-    data: dataPropTypes.isRequired
+    data: dataPropTypes.isRequired,
+    handleOpenModal: PropTypes.func.isRequired,
+    handleCloseModal: PropTypes.func.isRequired,
+    visibility: PropTypes.bool.isRequired
 }

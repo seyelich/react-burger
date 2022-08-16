@@ -9,4 +9,5 @@ export default function filterData(data, type) {
         .map((el) => <WithModalBurgerIngredient key={el._id} item={el} />)
 }
 
-export const adress = 'https://norma.nomoreparties.space/api/ingredients'
+export const adress = 'https://norma.nomoreparties.space/api/ingredients';
+export const modalRoot = document.getElementById("react-modals");

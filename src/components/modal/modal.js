@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import styles from './modal.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import React from "react";
-
-const modalRoot = document.getElementById("react-modals");
-
+import PropTypes from 'prop-types';
+import { modalRoot } from "../utils/utils";
 
 export default function Modal({ handleClose, title, children }) {
     function handleKeydown(e) {
@@ -34,4 +33,10 @@ export default function Modal({ handleClose, title, children }) {
         ),
         modalRoot
     )
+}
+
+Modal.propTypes = {
+    handleClose: PropTypes.func.isRequired,
+    title: PropTypes.string,
+    children: PropTypes.node.isRequired
 }

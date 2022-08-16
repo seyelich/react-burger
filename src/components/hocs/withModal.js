@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 export default function withModal(Component) {
     return function(props) {
@@ -16,4 +17,8 @@ export default function withModal(Component) {
             <Component {...props} visibility={visibility} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal} />
         )
     }
+}
+
+withModal.propTypes = {
+    Component: PropTypes.element.isRequired
 }

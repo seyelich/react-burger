@@ -1,5 +1,7 @@
 import Modal from "../modal/modal";
-import styles from './ingredient-details.module.css'
+import styles from './ingredient-details.module.css';
+import PropTypes from 'prop-types';
+import { itemPropTypes } from "../utils/types";
 
 export default function IngredientDetails({ item, handleClose }) {
     //не работает закрытие по клику на оверлей и кнопке, но работает через Esc. Я не знаю почему, ломаю голову второй день
@@ -28,4 +30,9 @@ export default function IngredientDetails({ item, handleClose }) {
             </div>
         </Modal>
     )
+}
+
+IngredientDetails.propTypes = {
+    item: itemPropTypes.isRequired,
+    handleClose: PropTypes.func.isRequired,
 }
