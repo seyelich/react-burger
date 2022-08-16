@@ -35,21 +35,21 @@ export default function BurgerIngredients({ data }) {
                 <li id="buns">
                     <h3 className="text text_type_main-medium">Булки</h3>
                     <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData('bun') }
+                        { filterData(data, 'bun') }
                     </ul>
                 </li>
 
                 <li id="sauces">
                     <h3 className="text text_type_main-medium">Соусы</h3>
                     <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData('sauce') }
+                        { filterData(data, 'sauce') }
                     </ul>
                 </li>
 
                 <li id="fillings">
                     <h3 className="text text_type_main-medium">Начинка</h3>
                     <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData('main') }
+                        { filterData(data, 'main') }
                     </ul>
                 </li>
             </ul>

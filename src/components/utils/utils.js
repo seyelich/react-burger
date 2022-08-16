@@ -1,8 +1,12 @@
-import BurgerIngredient from "../ingredient/ingredient"
-import { data } from "./data"
+import withModal from "../hocs/withModal";
+import BurgerIngredient from "../ingredient/ingredient";
 
-export default function filterData(type) {
+export const WithModalBurgerIngredient = withModal(BurgerIngredient);
+
+export default function filterData(data, type) {
     return data
         .filter((item) => item.type === type)
-        .map((el) => <BurgerIngredient key={el._id} item={el} />)
+        .map((el) => <WithModalBurgerIngredient key={el._id} item={el} />)
 }
+
+export const adress = 'https://norma.nomoreparties.space/api/ingredients'
