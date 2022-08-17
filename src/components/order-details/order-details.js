@@ -6,7 +6,7 @@ import { dataPropTypes } from "../utils/types";
 
 export default function OrderDetails({data, handleClose}) {
     return (
-        <Modal handleClose={handleClose}>
+        <Modal handleClose={handleClose} hasOverlay={true}>
             <p className={`${styles.number} text text_type_digits-large mt-30`}>034536</p>
             <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
             <img src={img} className="mb-15 mt-15" />
@@ -17,6 +17,6 @@ export default function OrderDetails({data, handleClose}) {
 }
 
 OrderDetails.propTypes = {
-    data: dataPropTypes.isRequired,
+    data: dataPropTypes,
     handleClose: PropTypes.func.isRequired,
 }

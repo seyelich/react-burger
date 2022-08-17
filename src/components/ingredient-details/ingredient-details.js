@@ -3,11 +3,9 @@ import styles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import { itemPropTypes } from "../utils/types";
 
-export default function IngredientDetails({ item, handleClose }) {
-    //не работает закрытие по клику на оверлей и кнопке, но работает через Esc. Я не знаю почему, ломаю голову второй день
-    
+export default function IngredientDetails({ item, handleClose }) {    
     return (
-        <Modal handleClose={handleClose} title='Детали ингредиента'>
+        <Modal handleClose={handleClose} title='Детали ингредиента' hasOverlay={true}>
             <img src={item.image_large} alt={item.title} />
             <p className="text text_type_main-medium mt-4 mb-8">{item.name}</p>
             <div className={`${styles.parContainer} mb-15`}>
