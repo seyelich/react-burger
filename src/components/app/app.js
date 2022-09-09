@@ -1,17 +1,27 @@
-import React from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import AppHeader from '../header/header';
 import Main from "../main/main";
 import getIngredients from '../utils/burger-api';
+import { DataContext, ChosenItemsContext } from '../../services/appContext';
 
 export default function App() {
-    const [data, setData] = React.useState([]);
+    const [state, setState] = useState({
+        data: [],
+        order: null
+    });
 
-    React.useEffect(() => { getIngredients(setData) }, [])
+    const [chosenItems, setChosenItems] = useState([]);
+
+    useEffect(() => { getIngredients(setState, state) }, []);
 
     return (
         <>
             <AppHeader />
-            <Main data={data} />
+            <DataContext.Provider value={{state, setState}}>
+                <ChosenItemsContext.Provider value={{chosenItems, setChosenItems}}>
+                    <Main />
+                </ChosenItemsContext.Provider>
+            </DataContext.Provider>
         </>
     )
 }

@@ -1,12 +1,14 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import ingredientsStyles from './ingredients.module.css';
-import { dataPropTypes } from '../utils/types';
 import filterData from '../utils/utils';
+import { DataContext } from '../../services/appContext';
 
 
-export default function BurgerIngredients({ data }) {
+export default function BurgerIngredients() {
     const [current, setCurrent] = React.useState('one');
+    const { state } = useContext(DataContext);
+    const data = state.data;
 
     return (
         <section className="default-section mb-10">
@@ -55,8 +57,4 @@ export default function BurgerIngredients({ data }) {
             </ul>
         </section>
     )
-}
-
-BurgerIngredients.propTypes = {
-    data: dataPropTypes.isRequired
 }

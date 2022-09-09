@@ -3,18 +3,19 @@ import mainStyles from './main.module.css';
 import BurgerConsrtuctor from "../constuctor/contructor";
 import withModal from '../hocs/withModal';
 import { dataPropTypes } from '../utils/types';
+import { TotalPriceContext } from '../../services/appContext';
+import { useState } from 'react';
 
-export default function Main({ data }) {
+export default function Main() {
     const WithModalBurgerContructor = withModal(BurgerConsrtuctor);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     return (
         <main className={mainStyles.content}>
-            <BurgerIngredients data={data} />
-            <WithModalBurgerContructor data={data} />
+            <BurgerIngredients />
+            <TotalPriceContext.Provider value={{totalPrice, setTotalPrice}}>
+                <WithModalBurgerContructor />
+            </TotalPriceContext.Provider>
         </main>
     )
-}
-
-Main.propTypes = {
-    data: dataPropTypes.isRequired
 }
