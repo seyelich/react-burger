@@ -1,27 +1,34 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from './constructor.module.css'
-import PriceContainer from "../price/price"
+import styles from './constructor.module.css';
+import PriceContainer from "../price/price";
 import ConstructorItem from "../constructor-item/constructor-item";
 import OrderDetails from "../order-details/order-details";
-import PropTypes from 'prop-types';
-import { ChosenItemsContext, TotalPriceContext, OrderContext } from "../../services/appContext";
-import { countPrice } from '../utils/utils'
+import { ChosenItemsContext, TotalPriceContext } from "../../services/appContext";
+import { countPrice } from '../utils/utils';
+import Modal from "../modal/modal";
 
-export default function BurgerConsrtuctor({ handleOpenModal, handleCloseModal, visibility }) {
+export default function BurgerConsrtuctor() {
     const { chosenItems } = useContext(ChosenItemsContext);
-    const {totalPrice, setTotalPrice } = useContext(TotalPriceContext);
+    const { totalPrice, setTotalPrice } = useContext(TotalPriceContext);
+    const [visibility, setVisibility] = useState(false);
+        
+    function handleOpenModal() {
+        setVisibility(true)
+    }
 
-    const [order, setOrder] = useState([]);
+    function handleCloseModal() {
+        setVisibility(false)
+    }
 
     useEffect(() => {
         setTotalPrice(countPrice(chosenItems))
     }, [chosenItems])
 
     const modal = (
-        <OrderContext.Provider value={{order, setOrder}}>
-            <OrderDetails handleClose={handleCloseModal}/>
-        </OrderContext.Provider>
+        <Modal handleClose={handleCloseModal} hasOverlay={true}>
+            <OrderDetails />
+        </Modal>
     )
     
     return (
@@ -82,10 +89,4 @@ export default function BurgerConsrtuctor({ handleOpenModal, handleCloseModal, v
             {visibility && modal}
         </section>
     )
-}
-
-BurgerConsrtuctor.propTypes = {
-    handleOpenModal: PropTypes.func.isRequired,
-    handleCloseModal: PropTypes.func.isRequired,
-    visibility: PropTypes.bool.isRequired
 }

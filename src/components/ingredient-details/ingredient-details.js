@@ -1,11 +1,9 @@
-import Modal from "../modal/modal";
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { itemPropTypes } from "../utils/types";
+import {PropTypes} from 'prop-types'
 
-export default function IngredientDetails({ item, handleClose }) {    
+export default function IngredientDetails({ item }) {  
     return (
-        <Modal handleClose={handleClose} title='Детали ингредиента' hasOverlay={true}>
+        <>
             <img src={item.image_large} alt={item.title} />
             <p className="text text_type_main-medium mt-4 mb-8">{item.name}</p>
             <div className={`${styles.parContainer} mb-15`}>
@@ -26,11 +24,23 @@ export default function IngredientDetails({ item, handleClose }) {
                     <span className="text text_type_digits-default text_color_inactive mt-2">{item.carbohydrates}</span>
                 </p>
             </div>
-        </Modal>
+        </>
     )
 }
 
 IngredientDetails.propTypes = {
-    item: itemPropTypes.isRequired,
-    handleClose: PropTypes.func.isRequired,
+    item: PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string,
+        type: PropTypes.string,
+        proteins: PropTypes.number,
+        fat: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        calories: PropTypes.number,
+        price: PropTypes.number,
+        image: PropTypes.string,
+        image_mobile: PropTypes.string,
+        image_large: PropTypes.string,
+        __v: PropTypes.number,
+    }).isRequired
 }
