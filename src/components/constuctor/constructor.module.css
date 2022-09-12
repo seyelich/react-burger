@@ -1,0 +1,19 @@
+.list {
+    margin: 0;
+    flex-direction: column;
+    gap: 16px;
+    height: 408px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.priceContainer {
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+}

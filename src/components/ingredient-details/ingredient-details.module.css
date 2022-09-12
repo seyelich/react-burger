@@ -1,0 +1,11 @@
+.parContainer {
+    display: flex;
+    gap: 20px;
+}
+
+.par {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

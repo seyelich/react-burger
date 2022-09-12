@@ -1,0 +1,20 @@
+.itemsList {
+    margin: 0;
+    height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.ingredientsList {
+    flex-wrap: wrap;
+    row-gap: 32px;
+    column-gap: 24px;
+}
+
+.link {
+    text-decoration: none;
+    color: none;
+}
+
