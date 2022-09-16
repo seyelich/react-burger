@@ -1,21 +1,26 @@
 import BurgerIngredients from '../ingredients/ingredients';
 import mainStyles from './main.module.css';
 import BurgerConsrtuctor from "../constuctor/contructor";
-import { TotalPriceContext, CurrItemContext } from '../../services/appContext';
-import { useState } from 'react';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { useDispatch } from 'react-redux';
+import { GET_CHOSEN_ITEMS } from '../../services/actions/constructor';
+import { INCREASE_ITEM } from '../../services/actions/ingredients';
 
 export default function Main() {
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [ currItem, setCurrItem ] = useState({});
+    const dispatch = useDispatch();
+
+    const handleDrop = (item) => {
+        dispatch({type: GET_CHOSEN_ITEMS, payload: item});
+        dispatch({type: INCREASE_ITEM, payload: item});
+    }
 
     return (
         <main className={mainStyles.content}>
-            <CurrItemContext.Provider value={{currItem, setCurrItem}}>
+            <DndProvider backend={HTML5Backend}>
                 <BurgerIngredients />
-            </CurrItemContext.Provider>
-            <TotalPriceContext.Provider value={{totalPrice, setTotalPrice}}>
-                <BurgerConsrtuctor />
-            </TotalPriceContext.Provider>
+                <BurgerConsrtuctor onDropHandler={handleDrop}/>
+            </DndProvider>
         </main>
     )
 }

@@ -1,27 +1,18 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useEffect } from 'react';
 import AppHeader from '../header/header';
 import Main from "../main/main";
-import getIngredients from '../utils/burger-api';
-import { DataContext, ChosenItemsContext } from '../../services/appContext';
+import { useDispatch } from 'react-redux';
+import { getItems } from '../../services/actions/ingredients';
 
 export default function App() {
-    const [state, setState] = useState({
-        data: [],
-        order: null
-    });
+    const dispatch = useDispatch();
 
-    const [chosenItems, setChosenItems] = useState([]);
-
-    useEffect(() => { getIngredients(setState, state) }, []);
+    useEffect(() => { dispatch(getItems()) }, [dispatch]);
 
     return (
         <>
             <AppHeader />
-            <DataContext.Provider value={{state, setState}}>
-                <ChosenItemsContext.Provider value={{chosenItems, setChosenItems}}>
-                    <Main />
-                </ChosenItemsContext.Provider>
-            </DataContext.Provider>
+            <Main />
         </>
     )
 }

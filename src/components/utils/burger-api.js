@@ -7,21 +7,13 @@ function checkResult(res) {
     return Promise.reject(`Что-то пошло не так: ${res.status}`)
 }
 
-export default function getIngredients(setState, state) {
+export function getIngredients() {
     return fetch(`${adress}/ingredients`)
         .then(res => checkResult(res))
-        .then(res => 
-            setState({
-                ...state, 
-                data: res.data.map((el) => {
-                    return { ...el, qty: 0}
-                })
-            })
-        )
         .catch(err => console.log(err))
 }
 
-export function getOrderNumber(idArr, setState) {
+export function getOrderInfo(idArr) {
     return fetch(`${adress}/orders`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -30,5 +22,5 @@ export function getOrderNumber(idArr, setState) {
         })
     })
         .then(res => checkResult(res))
-        .then(res => setState(res.order.number))
+        .catch(err => console.log(err))
 }

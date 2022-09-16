@@ -1,17 +1,17 @@
 import img from "../../images/done.png";
 import styles from './order-details.module.css';
-import { ChosenItemsContext } from "../../services/appContext";
-import { useContext, useEffect, useState } from "react";
-import { getOrderNumber } from "../utils/burger-api";
+import { useEffect } from "react";
+import { getOrder } from "../../services/actions/modals";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function OrderDetails() {
-    const [number, setNumber] = useState(null);
-    const { chosenItems } = useContext(ChosenItemsContext)
-    const data = chosenItems.map((el) => el._id);
+    const chosenItems = useSelector(store => store.burderConstructor.chosenItems)
+    const ids = chosenItems.map((el) => el._id);
+    const number = useSelector(store => store.order.order.number);
 
-    useEffect(() => {
-        getOrderNumber(data, setNumber)
-    }, [])
+    const dispatch = useDispatch();
+
+    useEffect(() => { dispatch(getOrder(ids)) }, [dispatch])
 
     return (
         <>
