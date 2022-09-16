@@ -12,9 +12,8 @@ export default function Main() {
     const dispatch = useDispatch();
 
     const handleDrop = (item) => {
-        dispatch({type: GET_CHOSEN_ITEMS, payload: item});
         dispatch({type: INCREASE_ITEM, payload: item});
-        dispatch(makeKey(v4()));
+        dispatch({type: GET_CHOSEN_ITEMS, payload: item, key: v4()});
     }
 
     return (

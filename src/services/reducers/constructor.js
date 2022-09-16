@@ -11,11 +11,11 @@ export const constructorReducer = (state = initialState, action) => {
         const newState = [...state.chosenItems];
     
         if(index !== -1) {
-            newState[index] = action.payload
+            newState[index] = {...action.payload, key: action.key}
             return newState
         }
         else {
-            return [...state.chosenItems, action.payload]
+            return [...state.chosenItems, {...action.payload, key: action.key}]
         }
     }
 
@@ -24,7 +24,7 @@ export const constructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 chosenItems: action.payload.type !== 'bun' ? 
-                    [...state.chosenItems, action.payload]
+                    [...state.chosenItems, {...action.payload, key: action.key}]
                     : addBun(state, action)
             }
         }
@@ -62,18 +62,6 @@ export const constructorReducer = (state = initialState, action) => {
 
         case CLEAR_CONSTRUCTOR: {
             return { ...state, chosenItems: [] }
-        }
-
-        case MAKE_KEY: {
-            return {
-                ...state,
-                chosenItems: [...state.chosenItems].map((el) => {
-                    if(el.key === undefined) {
-                        el.key = action.key
-                    };
-                    return el
-                })
-            }
         }
 
         default: {
