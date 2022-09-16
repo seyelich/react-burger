@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from "react";
-import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './constructor.module.css';
@@ -57,8 +56,8 @@ export default function BurgerConsrtuctor({onDropHandler}) {
                     {
                         chosenItems
                             .filter((el) => el.type === 'bun')
-                            .map((el, index) => 
-                                <div className={`${styles.container} mr-4 mb-4`} key={index}>
+                            .map((el) => 
+                                <div className={`${styles.container} mr-4 mb-4`} key={el.key}>
                                     <ConstructorElement
                                         type="top"
                                         isLocked={true}
@@ -76,7 +75,7 @@ export default function BurgerConsrtuctor({onDropHandler}) {
                             .filter((el) => el.type !== 'bun')
                             .map((el, index) => {
                                 for(let i = 0; i < el.qty; i++) {
-                                    return (<ConstructorItem key={v4()} item={el} moveItem={moveItem} index={index} />)
+                                    return (<ConstructorItem key={el.key} item={el} moveItem={moveItem} index={index} />)
                                 }
                             })
                         }
@@ -85,8 +84,8 @@ export default function BurgerConsrtuctor({onDropHandler}) {
                     {
                         chosenItems
                             .filter((el) => el.type === 'bun')
-                            .map((el, index) => 
-                                <div className={`${styles.container} mr-4 mt-4`} key={index}>
+                            .map((el) => 
+                                <div className={`${styles.container} mr-4 mt-4`} key={el.key}>
                                     <ConstructorElement
                                         type="bottom"
                                         isLocked={true}

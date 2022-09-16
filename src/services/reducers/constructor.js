@@ -1,4 +1,4 @@
-import { GET_CHOSEN_ITEMS, SET_TOTAL_PRICE, DELETE_ITEM, MOVE_ITEM, CLEAR_ORDER, CLEAR_CONSTRUCTOR } from '../actions/constructor';
+import { GET_CHOSEN_ITEMS, SET_TOTAL_PRICE, DELETE_ITEM, MOVE_ITEM, CLEAR_CONSTRUCTOR, MAKE_KEY } from '../actions/constructor';
 
 const initialState = {
     chosenItems: [],
@@ -62,6 +62,18 @@ export const constructorReducer = (state = initialState, action) => {
 
         case CLEAR_CONSTRUCTOR: {
             return { ...state, chosenItems: [] }
+        }
+
+        case MAKE_KEY: {
+            return {
+                ...state,
+                chosenItems: [...state.chosenItems].map((el) => {
+                    if(el.key === undefined) {
+                        el.key = action.key
+                    };
+                    return el
+                })
+            }
         }
 
         default: {

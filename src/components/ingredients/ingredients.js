@@ -25,7 +25,7 @@ export default function BurgerIngredients() {
 
     const dispatch = useDispatch();
 
-    const items = useSelector(store => store.ingredients.items);
+    const { items, itemsRequest } = useSelector(store => store.ingredients);
     
     function handleClick(item) {
         setVisibility(true);
@@ -86,23 +86,32 @@ export default function BurgerIngredients() {
             <ul className={`${ingredientsStyles.itemsList} default-list`} onScroll={handleScroll}>
                 <li ref={bunsRef}>
                     <h3 className="text text_type_main-medium">Булки</h3>
-                    <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData(items, 'bun') }
-                    </ul>
+                    {
+                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> 
+                        : <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
+                            { filterData(items, 'bun') }
+                        </ul>
+                    }
                 </li>
 
                 <li ref={saucesRef}>
                     <h3 className="text text_type_main-medium">Соусы</h3>
-                    <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData(items, 'sauce') }
-                    </ul>
+                    {
+                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
+                            { filterData(items, 'sauce') }
+                        </ul>
+                    }
                 </li>
 
                 <li ref={fillingsRef}>
                     <h3 className="text text_type_main-medium">Начинка</h3>
-                    <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData(items, 'main') }
-                    </ul>
+                    {
+                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
+                            { filterData(items, 'main') }
+                        </ul>
+                    }
                 </li>
             </ul>
             {visibility && modal}

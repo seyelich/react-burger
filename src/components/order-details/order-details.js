@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function OrderDetails() {
     const chosenItems = useSelector(store => store.burderConstructor.chosenItems)
     const ids = chosenItems.map((el) => el._id);
-    const number = useSelector(store => store.order.order.number);
+    const { order, orderRequest } = useSelector(store => store.order);
 
     const dispatch = useDispatch();
 
@@ -15,7 +15,10 @@ export default function OrderDetails() {
 
     return (
         <>
-            <p className={`${styles.number} text text_type_digits-large mt-30`}>{number}</p>
+            { orderRequest ? 
+                <p className='text text_type_main-large'>...</p> 
+                : <p className={`${styles.number} text text_type_digits-large mt-30`}>{order.number}</p>
+            }
             <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
             <img src={img} alt="Заказ принят" className="mb-15 mt-15" />
             <p className="text text text_type_main-default mt-2">Ваш заказ начали готовить</p>
