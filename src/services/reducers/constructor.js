@@ -1,17 +1,4 @@
-import { GET_CHOSEN_ITEMS, SET_TOTAL_PRICE, DELETE_ITEM, MOVE_ITEM } from '../actions/constructor';
-
-function addBun(state, action) {
-    const index = [...state.chosenItems].findIndex((el) => el.type === 'bun');
-    const newState = [...state.chosenItems];
-
-    if(index !== -1) {
-        newState[index] = action.payload
-        return newState
-    }
-    else {
-        return [...state.chosenItems, action.payload]
-    }
-}
+import { GET_CHOSEN_ITEMS, SET_TOTAL_PRICE, DELETE_ITEM, MOVE_ITEM, CLEAR_ORDER, CLEAR_CONSTRUCTOR } from '../actions/constructor';
 
 const initialState = {
     chosenItems: [],
@@ -19,6 +6,19 @@ const initialState = {
 }
 
 export const constructorReducer = (state = initialState, action) => {
+    function addBun(state, action) {
+        const index = [...state.chosenItems].findIndex((el) => el.type === 'bun');
+        const newState = [...state.chosenItems];
+    
+        if(index !== -1) {
+            newState[index] = action.payload
+            return newState
+        }
+        else {
+            return [...state.chosenItems, action.payload]
+        }
+    }
+
     switch (action.type) {
         case GET_CHOSEN_ITEMS: {
             return {
@@ -58,6 +58,10 @@ export const constructorReducer = (state = initialState, action) => {
                 ...state,
                 chosenItems: notBun.concat(bun)
             }
+        }
+
+        case CLEAR_CONSTRUCTOR: {
+            return { ...state, chosenItems: [] }
         }
 
         default: {

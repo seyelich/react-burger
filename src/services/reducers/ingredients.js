@@ -1,4 +1,4 @@
-import { GET_ITEMS, GET_ITEMS_SUCCESS, INCREASE_ITEM, DECREASE_ITEM, GET_ITEMS_FAILED } from '../actions/ingredients';
+import { GET_ITEMS, GET_ITEMS_SUCCESS, INCREASE_ITEM, DECREASE_ITEM, GET_ITEMS_FAILED, CLEAR_QTY } from '../actions/ingredients';
 
 const initialState = {
     items: [],
@@ -46,6 +46,15 @@ export const ingredientsReducer = (state = initialState, action) => {
                     else {
                         return el.type !== 'bun' ? el : action.payload.type === 'bun' ? {...el, qty: 2} : el
                     }
+                })
+            }
+        }
+
+        case CLEAR_QTY: {
+            return {
+                ...state,
+                items: [...state.items].map((el) => {
+                    return {...el, qty: 0}
                 })
             }
         }

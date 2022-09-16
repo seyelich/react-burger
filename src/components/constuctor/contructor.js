@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { Button, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './constructor.module.css';
@@ -75,7 +76,7 @@ export default function BurgerConsrtuctor({onDropHandler}) {
                             .filter((el) => el.type !== 'bun')
                             .map((el, index) => {
                                 for(let i = 0; i < el.qty; i++) {
-                                    return (<ConstructorItem key={index} item={el} moveItem={moveItem} index={index} />)
+                                    return (<ConstructorItem key={v4()} item={el} moveItem={moveItem} index={index} />)
                                 }
                             })
                         }

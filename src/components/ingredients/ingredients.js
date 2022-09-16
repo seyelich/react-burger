@@ -26,7 +26,6 @@ export default function BurgerIngredients() {
     const dispatch = useDispatch();
 
     const items = useSelector(store => store.ingredients.items);
-    const currItem = useSelector(store => store.item.currItem);
     
     function handleClick(item) {
         setVisibility(true);
@@ -56,7 +55,7 @@ export default function BurgerIngredients() {
 
     const modal = (
         <Modal handleClose={handleCloseModal} title='Детали ингредиента' hasOverlay={true}>
-            <IngredientDetails item={currItem} /> 
+            <IngredientDetails /> 
         </Modal>
     )
     
