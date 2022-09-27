@@ -1,59 +1,61 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useContext, useState } from 'react';
+import { useRef, useState } from 'react';
 import ingredientsStyles from './ingredients.module.css';
-import { CurrItemContext, DataContext, ChosenItemsContext } from '../../services/appContext';
 import BurgerIngredient from "../ingredient/ingredient";
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from "../modal/modal";;
+import Modal from "../modal/modal";
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_ITEM_INFO, DELETE_ITEM_INFO } from '../../services/actions/modals';
 
 export default function BurgerIngredients() {
-    const [ current, setCurrent ] = useState('one');
+    const [ current, setCurrent ] = useState('buns');
     const [visibility, setVisibility] = useState(false);
-    const { state, setState } = useContext(DataContext);
-    const { currItem, setCurrItem } = useContext(CurrItemContext);
-    const { chosenItems, setChosenItems } = useContext(ChosenItemsContext);
-    const data = state.data;
+
+    const bunsRef = useRef(null);
+    const saucesRef = useRef(null);
+    const fillingsRef = useRef(null);
+    const containerRef = useRef(null);
+
+    const tabHandleClick = (val) => {
+        setCurrent(val)
+        val === 'buns' && bunsRef.current.scrollIntoView({behavior: 'smooth'});
+        val === 'sauces' && saucesRef.current.scrollIntoView({behavior: 'smooth'});
+        val === 'fillings' && fillingsRef.current.scrollIntoView({behavior: 'smooth'});
+    }
+
+    const dispatch = useDispatch();
+
+    const { items, itemsRequest } = useSelector(store => store.ingredients);
     
     function handleClick(item) {
         setVisibility(true);
-        setCurrItem(item);
-        setState( 
-            {
-                ...state, data: state.data.map((el) => {
-                    if(el._id === item._id) {
-                        return el.type !== 'bun' ? {...el, qty: ++el.qty} : {...el, qty: 1}
-                    }
-                    else {
-                        return el.type !== 'bun' ? el : item.type === 'bun' ? {...el, qty: 0} : el
-                    }
-                })
-            }
-        )
-
-        setChosenItems(item.type !== 'bun' ? 
-            [...chosenItems, item] //repeat
-            : () => {
-                const index = [...chosenItems].findIndex((el) => el.type === 'bun');
-                const newState = [...chosenItems];
-            
-                if(index !== -1) {
-                    newState[index] = item
-                    return newState
-                }
-                else {
-                    return [...chosenItems, item]
-                }
-            }
-        )
+        dispatch({type: ADD_ITEM_INFO, payload: item});
     }
 
     function handleCloseModal() {
-        setVisibility(false)
+        setVisibility(false);
+        dispatch({type: DELETE_ITEM_INFO});
+    }
+
+    function handleScroll() {
+        const bunsDistance = Math.abs(bunsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
+        const saucesDistance = Math.abs(saucesRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
+        const fillingsDistance = Math.abs(fillingsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
+        
+        if(bunsDistance<saucesDistance) {
+            setCurrent('buns')
+        }
+        else if(saucesDistance<fillingsDistance) {
+            setCurrent('sauces')
+        }
+        else if(fillingsDistance<bunsDistance) {
+            setCurrent('fillings')
+        }
     }
 
     const modal = (
         <Modal handleClose={handleCloseModal} title='Детали ингредиента' hasOverlay={true}>
-            <IngredientDetails item={currItem} /> 
+            <IngredientDetails /> 
         </Modal>
     )
     
@@ -64,48 +66,52 @@ export default function BurgerIngredients() {
     }
 
     return (
-        <section className="default-section mb-10">
+        <section className="default-section mb-10" ref={containerRef}>
             <h2 className="text text_type_main-large mb-5 mt-10">Соберите бургер</h2>
             <menu className="default-list mb-10 mt-5">
                 <li>
-                    <a className={ingredientsStyles.link} href="#buns">
-                        <Tab value="one" active={current === 'one'} onClick={setCurrent}>Булки</Tab>
-                    </a>
+                    <Tab value="buns" active={current === 'buns'} onClick={tabHandleClick} className={ingredientsStyles.link}>Булки</Tab>
                 </li>
 
                 <li>
-                    <a className={ingredientsStyles.link} href="#sauces">
-                        <Tab value="two" active={current === 'two'} onClick={setCurrent}>Соусы</Tab>
-                    </a>
+                    <Tab value="sauces" active={current === 'sauces'} onClick={tabHandleClick} className={ingredientsStyles.link}>Соусы</Tab>
+
                 </li>
 
                 <li>
-                    <a className={ingredientsStyles.link} href="#fillings">
-                        <Tab value="three" active={current === 'three'} onClick={setCurrent}>Начинки</Tab>
-                    </a>
+                    <Tab value="fillings" active={current === 'fillings'} onClick={tabHandleClick} className={ingredientsStyles.link}>Начинки</Tab>
                 </li>
             </menu>
 
-            <ul className={`${ingredientsStyles.itemsList} default-list`}>
-                <li id="buns">
+            <ul className={`${ingredientsStyles.itemsList} default-list`} onScroll={handleScroll}>
+                <li ref={bunsRef}>
                     <h3 className="text text_type_main-medium">Булки</h3>
-                    <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData(data, 'bun') }
-                    </ul>
+                    {
+                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> 
+                        : <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
+                            { filterData(items, 'bun') }
+                        </ul>
+                    }
                 </li>
 
-                <li id="sauces">
+                <li ref={saucesRef}>
                     <h3 className="text text_type_main-medium">Соусы</h3>
-                    <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData(data, 'sauce') }
-                    </ul>
+                    {
+                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
+                            { filterData(items, 'sauce') }
+                        </ul>
+                    }
                 </li>
 
-                <li id="fillings">
+                <li ref={fillingsRef}>
                     <h3 className="text text_type_main-medium">Начинка</h3>
-                    <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
-                        { filterData(data, 'main') }
-                    </ul>
+                    {
+                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
+                            { filterData(items, 'main') }
+                        </ul>
+                    }
                 </li>
             </ul>
             {visibility && modal}

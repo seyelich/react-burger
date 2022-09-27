@@ -2,12 +2,16 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import ingredientStyles from './ingredient.module.css';
 import { itemPropTypes } from '../utils/types';
 import PropTypes from 'prop-types';
-import { ChosenItemsContext, CurrItemContext, DataContext } from '../../services/appContext';
-import { useContext } from 'react';
+import { useDrag } from 'react-dnd';
 
 export default function BurgerIngredient({item, handleClick}) {
+    const [, dragRef] = useDrag({
+        type: 'ingredient',
+        item: item
+    })
+
     return (
-        <li className={ingredientStyles.ingredient} onClick={handleClick} >
+        <li className={ingredientStyles.ingredient} onClick={handleClick} ref={dragRef} >
             { item.qty !== 0 && <Counter count={item.qty} size="default" /> }
             <img src={item.image} alt={item.title} />
             <div className={`${ingredientStyles.priceContainer} mb-2 mt-2`}>
