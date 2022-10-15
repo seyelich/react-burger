@@ -5,7 +5,7 @@ import styles from './constructor.module.css';
 import PriceContainer from "../price/price";
 import ConstructorItem from "../constructor-item/constructor-item";
 import OrderDetails from "../order-details/order-details";
-import { countPrice, getCookie } from '../utils/utils';
+import { countPrice, getCookie } from '../../utils/utils';
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";

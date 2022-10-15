@@ -1,6 +1,6 @@
-import { loginUser, registerUser, getUser, logoutUser, updateUserInfo, getTokenRequest } from '../../components/utils/burger-api';
-import { deleteCookie, setCookie } from '../../components/utils/utils';
-import { forgotPwUser, resetPwUser } from '../../components/utils/burger-api';
+import { loginUser, registerUser, getUser, logoutUser, updateUserInfo, getTokenRequest } from '../../utils/burger-api';
+import { deleteCookie, setCookie } from '../../utils/utils';
+import { forgotPwUser, resetPwUser } from '../../utils/burger-api';
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILED = 'REGISTER_FAILED';
@@ -68,7 +68,7 @@ function getTokenFailed() {
     return { type: REFRESH_TOKEN_FAILED };
 }
 
-export const register = (form) => (dispatch) =>  {
+export const register = (form, cn) => (dispatch) =>  {
     dispatch({type: REGISTER});
 
     registerUser(form).then(res => {
@@ -79,6 +79,7 @@ export const register = (form) => (dispatch) =>  {
                 type: REGISTER_SUCCESS,
                 payload: res
             })
+            cn();
         } else {
             dispatch(registerFailed())
         }

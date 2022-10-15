@@ -38,12 +38,12 @@ export default function ProfilePage() {
                         </NavLink>
                     </li>
                     <li>
-                        <a 
-                            className={`${styles.link} text text_type_main-medium text_color_inactive`}
+                        <button 
+                            className={`${styles.btn} text text_type_main-medium text_color_inactive`}
                             onClick={handleClick} 
                         >
                             Выход
-                        </a>
+                        </button>
                     </li>
                 </ul>
                 <p className="mt-20 text text_type_main-default text_color_inactive">В этом разделе вы можете изменить свои персональные данные</p>

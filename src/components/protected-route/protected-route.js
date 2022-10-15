@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import { getCookie } from '../utils/utils';
+import { getCookie } from '../../utils/utils';
 
 export function ProtectedRoute({ children, ...rest }) {
     const { refreshTokenRequest } = useSelector(store => store.user);

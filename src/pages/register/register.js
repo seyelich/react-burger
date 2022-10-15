@@ -1,11 +1,12 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Redirect } from 'react-router-dom';
-import { getCookie } from "../../components/utils/utils";
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { getCookie } from "../../utils/utils";
 import { register } from "../../services/actions/auth";
 
 export default function RegisterPage() {
+    const history = useHistory();
     const [ form, setForm ] = useState({
         name: '',
         email: '',
@@ -23,7 +24,7 @@ export default function RegisterPage() {
 
     const onFormSubmit = e => {
         e.preventDefault();
-        dispatch(register(form))
+        dispatch(register(form, () => history.replace({ pathname: '/' })))
     }
 
     if(getCookie('refreshToken')) {

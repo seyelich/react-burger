@@ -4,7 +4,7 @@ import styles from './modal.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import React from "react";
 import PropTypes from 'prop-types';
-import { modalRoot } from "../utils/utils";
+import { modalRoot } from "../../utils/utils";
 
 export default function Modal({ handleClose, title, children, hasOverlay }) {
     function handleKeydown(e) {

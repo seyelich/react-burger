@@ -41,7 +41,6 @@ export const ProfileForm = () => {
         data = !isEqual('name') ? { ...data, name: form.name } : data;
         data = !isEqual('email') ? { ...data, email: form.email } : data;
         data = !isEqual('pw') ? { ...data, pw: form.pw } : data;
-        console.log(data)
         dispatch(updateUser(data));
     }
 

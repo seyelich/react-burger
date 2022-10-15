@@ -2,7 +2,7 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import { getCookie } from "../../components/utils/utils";
+import { getCookie } from "../../utils/utils";
 import { login } from "../../services/actions/auth";
 
 export default function LoginPage() {

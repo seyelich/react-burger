@@ -13,7 +13,6 @@ import NotFound from '../../pages/not-found/not-found';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { DELETE_ITEM_INFO } from '../../services/actions/modals';
 
 
 export default function App() {
@@ -23,7 +22,6 @@ export default function App() {
     const background = location.state?.bg;
 
     function handleCloseModal() {
-        dispatch({type: DELETE_ITEM_INFO});
         history.goBack();
     }
 
