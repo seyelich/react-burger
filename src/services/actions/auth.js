@@ -1,5 +1,5 @@
 import { loginUser, registerUser, getUser, logoutUser, updateUserInfo, getTokenRequest } from '../../utils/burger-api';
-import { deleteCookie, setCookie } from '../../utils/utils';
+import { deleteCookie, getCookie, setCookie } from '../../utils/utils';
 import { forgotPwUser, resetPwUser } from '../../utils/burger-api';
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -73,7 +73,7 @@ export const register = (form, cn) => (dispatch) =>  {
 
     registerUser(form).then(res => {
         if (res && res.success) {
-            setCookie('accessToken', res.accessToken);
+            setCookie('accessToken', res.accessToken, { expires: 1200 });
             setCookie('refreshToken', res.refreshToken);
             dispatch({
                 type: REGISTER_SUCCESS,
@@ -95,7 +95,7 @@ export const login = (form, cn) => (dispatch) => {
 
     loginUser(form).then(res => {
         if (res && res.success) {
-            setCookie('accessToken', res.accessToken);
+            setCookie('accessToken', res.accessToken, { expires: 1200 });
             setCookie('refreshToken', res.refreshToken);
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -146,7 +146,7 @@ export const getUserInfo = () => (dispatch) => {
             dispatch(getUserFailed())
         }
         
-        if(res.message === 'jwt expired') {
+        if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
             dispatch(getToken());
         }
     })
@@ -213,7 +213,7 @@ export function updateUser(form) {
                 dispatch(updateUserFailed())
             }
 
-            if(res.message === 'jwt expired') {
+            if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
                 dispatch(getToken());
             }
         })
@@ -230,7 +230,7 @@ export function getToken() {
 
         getTokenRequest().then(res => {
             if (res && res.success) {
-                setCookie('accessToken', res.accessToken);
+                setCookie('accessToken', res.accessToken, { expires: 1200 });
                 setCookie('refreshToken', res.refreshToken);
                 dispatch({
                     type: REFRESH_TOKEN_SUCCESS

@@ -17,7 +17,7 @@ export default function ProfilePage() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.links}>
+            <div className={`${styles.links} mt-20`}>
                 <ul className={`${styles.list} default-list`}>
                     <li>
                         <NavLink 

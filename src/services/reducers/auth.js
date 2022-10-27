@@ -26,11 +26,7 @@ import {
 } from "../actions/auth";
 
 const initialState = {
-    user: {
-        name: '',
-        email: '',
-        pw: ''
-    },
+    user: null,
 
     registerRequest: false,
     registerFailed: false,

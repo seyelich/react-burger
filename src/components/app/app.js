@@ -13,6 +13,8 @@ import NotFound from '../../pages/not-found/not-found';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import { FeedPage } from '../../pages/feed/feed';
+import { OrderInfo } from '../order-info/order-info';
 
 
 export default function App() {
@@ -20,13 +22,15 @@ export default function App() {
     const history = useHistory();
     const location = useLocation();
     const background = location.state?.bg;
+    const num = location.state?.num;
+    const profileExact = location.state === null ? false : true;
 
     function handleCloseModal() {
         history.goBack();
     }
 
     useEffect(() => { dispatch(getItems()) }, [dispatch]);
-
+    
     return (
         <>
             <AppHeader />
@@ -46,24 +50,44 @@ export default function App() {
                 <Route path="/reset-password" exact={true}>
                     <ResetPwPage />
                 </Route>
-                <ProtectedRoute path="/profile">
+                <ProtectedRoute path="/profile" exact={profileExact}>
                     <ProfilePage />
                 </ProtectedRoute>
                 <Route path="/ingredients/:id" exact={true}>
                     <IngredientDetails />
                 </Route>
+                <Route path="/feed" exact={true} >
+                    <FeedPage />
+                </Route>
+                <Route path="/feed/:id" exact={true}>
+                    <OrderInfo />
+                </Route>
+                <ProtectedRoute path="/profile/orders/:id" exact={true}>
+                    <OrderInfo />
+                </ProtectedRoute>
                 <Route>
                     <NotFound />
                 </Route>
             </Switch>
             { background && (
-                <Route path="/ingredients/:id">
-                    <Modal handleClose={handleCloseModal} title='Детали ингредиента' hasOverlay={true} >
-                        <IngredientDetails />
-                    </Modal>
-                </Route>
+                <>
+                    <Route path="/ingredients/:id">
+                        <Modal handleClose={handleCloseModal} title='Детали ингредиента' hasOverlay={true} titleClassName="text_type_main-large">
+                            <IngredientDetails />
+                        </Modal>
+                    </Route>
+                    <Route path="/feed/:id">
+                        <Modal handleClose={handleCloseModal} title={num} hasOverlay={true} titleClassName="text_type_digits-default">
+                            <OrderInfo />
+                        </Modal>
+                    </Route>
+                    <ProtectedRoute path="/profile/orders/:id" >
+                        <Modal handleClose={handleCloseModal} title={num} hasOverlay={true} titleClassName="text_type_digits-default">
+                            <OrderInfo />
+                        </Modal>
+                    </ProtectedRoute>
+                </>
             )}
         </>
-        
     )
 }

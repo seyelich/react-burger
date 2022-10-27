@@ -11,9 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { MOVE_ITEM, SET_TOTAL_PRICE } from "../../services/actions/constructor";
 import { useHistory } from 'react-router-dom';
+import { getOrder } from "../../services/actions/modals";
 
 export default function BurgerConsrtuctor({onDropHandler}) {
     const { chosenItems, price} = useSelector(store => store.burderConstructor);
+    const ids = chosenItems.map((el) => el._id);
     const [visibility, setVisibility] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -36,6 +38,7 @@ export default function BurgerConsrtuctor({onDropHandler}) {
     function handleOpenModal() {
         if(getCookie('refreshToken')) {
             setVisibility(true);
+            dispatch(getOrder(ids));
         }
         else {
             history.replace({ pathname: '/login' })
@@ -108,7 +111,7 @@ export default function BurgerConsrtuctor({onDropHandler}) {
             }
 
             <div className={`${styles.priceContainer} mt-10 mr-4`}>
-                <PriceContainer total={price} />
+                <PriceContainer total={price} size="m" />
                 <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal} disabled={chosenItems.find(el => el.type === 'bun') === undefined} >Оформить заказ</Button>
             </div>
             {visibility && modal}

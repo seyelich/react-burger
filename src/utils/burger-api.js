@@ -1,4 +1,5 @@
-import { adress, getCookie } from "./utils";
+import { adress } from "./constants";
+import { getCookie } from "./utils";
 
 function checkResult(res) {
     if(res.ok) { 
@@ -16,7 +17,7 @@ export function getIngredients() {
 }
 
 export function getOrderInfo(idArr) {
-    return request(`${adress}/orders`, {
+    return fetch(`${adress}/orders`, {
         method: 'POST',
         headers: { 
             "Content-Type": "application/json" ,
@@ -26,6 +27,7 @@ export function getOrderInfo(idArr) {
             ingredients: idArr
         })
     })
+    .then(res => res.json())
 }
 
 export function registerUser(user) {

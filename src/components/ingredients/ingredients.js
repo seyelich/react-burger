@@ -64,7 +64,7 @@ export default function BurgerIngredients() {
                 <li ref={bunsRef}>
                     <h3 className="text text_type_main-medium">Булки</h3>
                     {
-                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> 
+                        itemsRequest ? <p className="loading text text_type_main-large">...</p> 
                         : <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
                             { filterData(items, 'bun') }
                         </ul>
@@ -74,7 +74,7 @@ export default function BurgerIngredients() {
                 <li ref={saucesRef}>
                     <h3 className="text text_type_main-medium">Соусы</h3>
                     {
-                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        itemsRequest ? <p className="loading text text_type_main-large">...</p> :
                         <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
                             { filterData(items, 'sauce') }
                         </ul>
@@ -84,7 +84,7 @@ export default function BurgerIngredients() {
                 <li ref={fillingsRef}>
                     <h3 className="text text_type_main-medium">Начинка</h3>
                     {
-                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        itemsRequest ? <p className="loading text text_type_main-large">...</p> :
                         <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
                             { filterData(items, 'main') }
                         </ul>

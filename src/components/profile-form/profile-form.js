@@ -17,16 +17,26 @@ export const ProfileForm = () => {
     const emailRef = useRef(null);
     const pwRef = useRef(null);
 
-    const isEqual = (field) =>  user[field] === form[field];
+    const isEqual = (field) =>  user && user[field] === form[field];
+
+    const makeDisabled = () => {
+        nameRef.current.classList.add('input__textfield-disabled');
+        emailRef.current.classList.add('input__textfield-disabled');
+        pwRef.current.classList.add('input__textfield-disabled');
+
+        nameRef.current.disabled = true;
+        emailRef.current.disabled = true;
+        pwRef.current.disabled = true;
+    }
 
     useEffect(() => {
         dispatch(getUserInfo());
-        setForm({
-            name: user.name,
-            email: user.email,
-            pw: user.pw ? user.pw : ''
+        user && setForm({
+            name: user?.name,
+            email: user?.email,
+            pw: user?.pw ? user?.pw : ''
         });
-    }, [dispatch, user.name, user.email, user.pw]);
+    }, [dispatch, user?.name, user?.email, user?.pw ]);
 
     const onFormChange = (e) => {
         setForm({
@@ -41,22 +51,17 @@ export const ProfileForm = () => {
         data = !isEqual('name') ? { ...data, name: form.name } : data;
         data = !isEqual('email') ? { ...data, email: form.email } : data;
         data = !isEqual('pw') ? { ...data, pw: form.pw } : data;
+        makeDisabled();
         dispatch(updateUser(data));
     }
 
     const onFormReset = () => {
         setForm({
-            name: user.name,
-            email: user.email,
-            pw: user.pw
-        })
-        nameRef.current.classList.add('input__textfield-disabled');
-        emailRef.current.classList.add('input__textfield-disabled');
-        pwRef.current.classList.add('input__textfield-disabled');
-
-        nameRef.current.disabled = true;
-        emailRef.current.disabled = true;
-        pwRef.current.disabled = true;
+            name: user?.name,
+            email: user?.email,
+            pw: user?.pw
+        });
+        makeDisabled();
     }
 
     const handleIconClick = (ref) => {
@@ -76,7 +81,7 @@ export const ProfileForm = () => {
     }
 
     return (
-        <form className="ml-15" onSubmit={onFormSubmit} >
+        <form className="ml-15 mt-20" onSubmit={onFormSubmit} >
             <fieldset className="fieldset mb-6" >
                 <Input 
                     type="text" 

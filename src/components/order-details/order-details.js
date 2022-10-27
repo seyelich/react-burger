@@ -1,17 +1,9 @@
 import img from "../../images/done.png";
 import styles from './order-details.module.css';
-import { useEffect } from "react";
-import { getOrder } from "../../services/actions/modals";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-    const chosenItems = useSelector(store => store.burderConstructor.chosenItems)
-    const ids = chosenItems.map((el) => el._id);
     const { order, orderRequest } = useSelector(store => store.order);
-
-    const dispatch = useDispatch();
-
-    useEffect(() => { dispatch(getOrder(ids)) }, [dispatch])
 
     return (
         <>
