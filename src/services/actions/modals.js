@@ -1,5 +1,4 @@
 import { getOrderInfo } from '../../utils/burger-api';
-import { getCookie } from '../../utils/utils';
 import { getToken } from './auth';
 import { CLEAR_CONSTRUCTOR } from './constructor';
 import { CLEAR_QTY } from './ingredients';
@@ -27,13 +26,12 @@ export function getOrder(ids) {
             } else {
                 dispatch(getOrderFailed())
             }
-            
-            if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
-                dispatch(getToken());
-            }
         })
         .catch(err => {
             console.log(err);
+            if(err.message === 'jwt expired') {
+                dispatch(getToken());
+            }
             dispatch(getOrderFailed())
         })
     }

@@ -5,7 +5,7 @@ function checkResult(res) {
     if(res.ok) { 
         return res.json();
     }
-    return Promise.reject(`Что-то пошло не так: ${res.status}`)
+    return Promise.reject(res)
 }
 
 function request(url, options) {
@@ -17,7 +17,7 @@ export function getIngredients() {
 }
 
 export function getOrderInfo(idArr) {
-    return fetch(`${adress}/orders`, {
+    return request(`${adress}/orders`, {
         method: 'POST',
         headers: { 
             "Content-Type": "application/json" ,
@@ -27,7 +27,6 @@ export function getOrderInfo(idArr) {
             ingredients: idArr
         })
     })
-    .then(res => res.json())
 }
 
 export function registerUser(user) {
@@ -95,18 +94,17 @@ export function getTokenRequest() {
 }
 
 export function getUser() {
-    return fetch(`${adress}/auth/user`, {
+    return request(`${adress}/auth/user`, {
         method: 'GET',
         headers: { 
             "Content-Type": "application/json",
             Authorization: getCookie('accessToken')
         }
     })
-    .then(res => res.json())
 }
 
 export function updateUserInfo(user) {
-    return fetch(`${adress}/auth/user`, {
+    return request(`${adress}/auth/user`, {
         method: 'PATCH',
         headers: { 
             "Content-Type": "application/json",
@@ -118,5 +116,4 @@ export function updateUserInfo(user) {
             name: user.name
         })
     })
-    .then(res => res.json())
 }

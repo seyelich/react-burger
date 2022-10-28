@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
-import { getIngredients } from '../../utils/burger-api';
 import styles from './ingredient-details.module.css';
 
 export default function IngredientDetails() {
+    const { items } = useSelector(store => store.ingredients);
     const location = useLocation();
     const bg = location.state?.bg;
+    const { id } = useParams();
 
     const [ currItem, setCurrItem ] = useState({
         image_large: '',
@@ -15,14 +17,17 @@ export default function IngredientDetails() {
         carbohydrates: ''
     });
 
-    const { id } = useParams();
-
+    const item = items.length !== 0 ? items?.find(el => el._id === id) : {
+        image_large: '',
+        calories: '',
+        proteins: '',
+        fat: '',
+        carbohydrates: ''
+    };
+    
     useEffect(() => {
-        getIngredients().then((res) => {
-            const item = res.data.find(el => el._id === id);
-            setCurrItem(item);
-        })
-    }, [id])
+        setCurrItem(item);
+    }, [id, item])
 
     return (
         <div className={styles.container} >

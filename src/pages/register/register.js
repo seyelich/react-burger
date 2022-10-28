@@ -1,35 +1,27 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getCookie } from "../../utils/utils";
 import { register } from "../../services/actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 export default function RegisterPage() {
-    const history = useHistory();
-    const [ form, setForm ] = useState({
+    const dispatch = useDispatch();
+    
+    const { values, handleChange } = useForm({
         name: '',
         email: '',
         pw: ''
     });
 
-    const dispatch = useDispatch();
-
-    const onFormChange = (e) => {
-        setForm({
-            ...form, 
-            [e.target.name]: e.target.value
-        });
-    }
-
     const onFormSubmit = e => {
         e.preventDefault();
-        dispatch(register(form, () => history.replace({ pathname: '/' })))
+        dispatch(register(values));
     }
 
-    if(getCookie('refreshToken')) {
+    if(getCookie('accessToken')) {
         return (
-            <Redirect to={{pathname: '/'}}/>
+            <Redirect to={'/'} />
         )
     }
 
@@ -38,9 +30,9 @@ export default function RegisterPage() {
             <h1 className='text text_type_main-medium'>Регистрация</h1>
             <form className="form" onSubmit={onFormSubmit}>
                 <fieldset className="fieldset mb-6 mt-6">
-                    <Input type="text" placeholder="Имя" name="name" value={form.name} onChange={onFormChange} />
-                    <Input type="email" placeholder="E-mail" name="email" value={form.email} onChange={onFormChange} />
-                    <PasswordInput name="pw" value={form.pw} onChange={onFormChange} />
+                    <Input type="text" placeholder="Имя" name="name" value={values.name} onChange={handleChange} />
+                    <Input type="email" placeholder="E-mail" name="email" value={values.email} onChange={handleChange} />
+                    <PasswordInput name="pw" value={values.pw} onChange={handleChange} />
                 </fieldset>
                 <Button type='primary' size="large" htmlType="submit">Зарегистрироваться</Button>
             </form>

@@ -10,7 +10,7 @@ export const ProfileOrders = () => {
 
     useEffect(() => {
         dispatch({ type: WS_CONNECTION_START_AUTH });
-        return dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
+        return () => dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
     }, [dispatch]);
 
     return (

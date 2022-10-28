@@ -19,8 +19,8 @@ export const socketMiddleware = (wsUrl, wsActions, isAuth) => {
 
             if (type === wsInit) {
                 socket = !isAuth
-                    ? new WebSocket(`${wsUrl}/all`)
-                    : new WebSocket(`${wsUrl}?token=${getCookie('accessToken')?.replace('Bearer ', '')}`)
+                    ? new WebSocket(`${wsUrl}${payload}`)
+                    : new WebSocket(`${wsUrl}?token=${token}`)
             }
 
             if (socket) {

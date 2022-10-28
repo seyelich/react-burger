@@ -1,5 +1,5 @@
 import { BurgerIcon,  ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useRouteMatch } from 'react-router-dom'; 
+import { NavLink, useRouteMatch, Link } from 'react-router-dom'; 
 import headerStyles from './header.module.css';
 
 export default function AppHeader() {
@@ -25,7 +25,7 @@ export default function AppHeader() {
                     </li>
                 </ul>
             </nav>
-            <span className={headerStyles.logo}><Logo /></span>
+            <Link to="/" className={headerStyles.logo}><Logo /></Link>
         </header>
     )
 }

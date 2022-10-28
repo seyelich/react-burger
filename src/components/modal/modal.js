@@ -40,5 +40,5 @@ Modal.propTypes = {
     handleClose: PropTypes.func.isRequired,
     title: PropTypes.string,
     children: PropTypes.node.isRequired,
-    titleClassName: PropTypes.string.isRequired
+    titleClassName: PropTypes.string
 }

@@ -1,5 +1,5 @@
 import { loginUser, registerUser, getUser, logoutUser, updateUserInfo, getTokenRequest } from '../../utils/burger-api';
-import { deleteCookie, getCookie, setCookie } from '../../utils/utils';
+import { deleteCookie, setCookie } from '../../utils/utils';
 import { forgotPwUser, resetPwUser } from '../../utils/burger-api';
 
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -68,7 +68,7 @@ function getTokenFailed() {
     return { type: REFRESH_TOKEN_FAILED };
 }
 
-export const register = (form, cn) => (dispatch) =>  {
+export const register = (form) => (dispatch) =>  {
     dispatch({type: REGISTER});
 
     registerUser(form).then(res => {
@@ -78,8 +78,7 @@ export const register = (form, cn) => (dispatch) =>  {
             dispatch({
                 type: REGISTER_SUCCESS,
                 payload: res
-            })
-            cn();
+            });
         } else {
             dispatch(registerFailed())
         }
@@ -90,7 +89,7 @@ export const register = (form, cn) => (dispatch) =>  {
     })
 }
 
-export const login = (form, cn) => (dispatch) => {
+export const login = (form) => (dispatch) => {
     dispatch({type: LOGIN});
 
     loginUser(form).then(res => {
@@ -101,7 +100,6 @@ export const login = (form, cn) => (dispatch) => {
                 type: LOGIN_SUCCESS,
                 payload: res.user
             })
-            cn();
         } else {
             dispatch(loginFailed())
         }
@@ -145,13 +143,12 @@ export const getUserInfo = () => (dispatch) => {
         } else {
             dispatch(getUserFailed())
         }
-        
-        if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
-            dispatch(getToken());
-        }
     })
     .catch(err => {
         console.log(err);
+        if(err.message === 'jwt expired') {
+            dispatch(getToken());
+        }
         dispatch(getUserFailed())
     })
 }
@@ -212,13 +209,12 @@ export function updateUser(form) {
             } else {
                 dispatch(updateUserFailed())
             }
-
-            if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
-                dispatch(getToken());
-            }
         })
         .catch(err => {
             console.log(err);
+            if(err.message === 'jwt expired') {
+                dispatch(getToken());
+            }
             dispatch(updateUserFailed())
         })
     }

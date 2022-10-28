@@ -1,13 +1,13 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "../../hooks/useForm";
 import { getUserInfo, updateUser } from "../../services/actions/auth";
 
 export const ProfileForm = () => {
     const dispatch = useDispatch();
-
     const { user } = useSelector(store => store.user);
-    const [ form, setForm ] = useState({
+    const { values, handleChange, setValues } = useForm({
         name: '',
         email: '',
         pw: ''
@@ -17,7 +17,7 @@ export const ProfileForm = () => {
     const emailRef = useRef(null);
     const pwRef = useRef(null);
 
-    const isEqual = (field) =>  user && user[field] === form[field];
+    const isEqual = (field) =>  user && user[field] === values[field];
 
     const makeDisabled = () => {
         nameRef.current.classList.add('input__textfield-disabled');
@@ -31,32 +31,25 @@ export const ProfileForm = () => {
 
     useEffect(() => {
         dispatch(getUserInfo());
-        user && setForm({
+        user && setValues({
             name: user?.name,
             email: user?.email,
             pw: user?.pw ? user?.pw : ''
         });
     }, [dispatch, user?.name, user?.email, user?.pw ]);
 
-    const onFormChange = (e) => {
-        setForm({
-            ...form, 
-            [e.target.name]: e.target.value
-        });
-    }
-
     const onFormSubmit = (e) => {
         e.preventDefault();
         let data = {};
-        data = !isEqual('name') ? { ...data, name: form.name } : data;
-        data = !isEqual('email') ? { ...data, email: form.email } : data;
-        data = !isEqual('pw') ? { ...data, pw: form.pw } : data;
+        data = !isEqual('name') ? { ...data, name: values.name } : data;
+        data = !isEqual('email') ? { ...data, email: values.email } : data;
+        data = !isEqual('pw') ? { ...data, pw: values.pw } : data;
         makeDisabled();
         dispatch(updateUser(data));
     }
 
     const onFormReset = () => {
-        setForm({
+        setValues({
             name: user?.name,
             email: user?.email,
             pw: user?.pw
@@ -72,8 +65,8 @@ export const ProfileForm = () => {
         } else {
             curr.disabled = true;
             curr.classList.add('input__textfield-disabled');
-            setForm({
-                ...form,
+            setValues({
+                ...values,
                 [curr.name]: user[curr.name]
             })
         }
@@ -88,8 +81,8 @@ export const ProfileForm = () => {
                     placeholder="Имя" 
                     icon={isEqual('name') ? "EditIcon" : "CloseIcon"} 
                     name="name" 
-                    value={form.name} 
-                    onChange={onFormChange}
+                    value={values.name} 
+                    onChange={handleChange}
                     onIconClick={() => handleIconClick(nameRef)}
                     disabled={true}
                     ref={nameRef}
@@ -99,8 +92,8 @@ export const ProfileForm = () => {
                     placeholder="Логин" 
                     icon={isEqual('email') ? "EditIcon" : "CloseIcon"} 
                     name="email" 
-                    value={form.email} 
-                    onChange={onFormChange}
+                    value={values.email} 
+                    onChange={handleChange}
                     onIconClick={() => handleIconClick(emailRef)}
                     disabled={true}
                     ref={emailRef}
@@ -110,8 +103,8 @@ export const ProfileForm = () => {
                     placeholder="Пароль" 
                     icon={isEqual('pw') ? "EditIcon" : "CloseIcon"} 
                     name="pw" 
-                    value={form.pw} 
-                    onChange={onFormChange}
+                    value={values.pw} 
+                    onChange={handleChange}
                     onIconClick={() => handleIconClick(pwRef)}
                     disabled={true}
                     ref={pwRef}

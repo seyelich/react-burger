@@ -61,8 +61,9 @@ export const setDate = (val) => {
     return `${getDay(diff)}, ${hours}:${minutes}, i-GMT+${createdDate.getTimezoneOffset()*(-1)/60}`;
 }
 
-export function setCookie(name, value, props) {
-    props = props || {};
+export function setCookie(name, value, props = {}) {
+    props = { path: "/", ...props };
+    
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
         const d = new Date();

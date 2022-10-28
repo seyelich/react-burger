@@ -9,8 +9,8 @@ export const FeedPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: WS_CONNECTION_START });
-        return dispatch({ type: WS_CONNECTION_CLOSED });
+        dispatch({ type: WS_CONNECTION_START, payload: '/all' });
+        return () => dispatch({ type: WS_CONNECTION_CLOSED });
     }, [dispatch]);
 
     const filterOrders = (arr, val) => {

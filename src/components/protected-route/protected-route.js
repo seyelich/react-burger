@@ -8,9 +8,7 @@ export function ProtectedRoute({ children, ...rest }) {
 
     if (token && refreshTokenRequest) {
         return (
-            <>
-                <p className='text text text_type_main-large'>Идет загрузка...</p>
-            </>
+            <p className='text text text_type_main-large'>Загрузка...</p>
         )
     }
 

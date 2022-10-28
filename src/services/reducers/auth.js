@@ -84,7 +84,7 @@ export const userReducer = (state = initialState, action) => {
         }
 
         case LOGOUT_SUCCESS: {
-            return { ...state, user: { ...initialState.user }, logoutRequest: false, logoutFailed: false}
+            return { ...state, user: initialState.user, logoutRequest: false, logoutFailed: false}
         }
 
         case LOGOUT_FAILED: {

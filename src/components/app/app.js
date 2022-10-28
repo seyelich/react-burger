@@ -16,14 +16,13 @@ import Modal from '../modal/modal';
 import { FeedPage } from '../../pages/feed/feed';
 import { OrderInfo } from '../order-info/order-info';
 
-
 export default function App() {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
     const background = location.state?.bg;
     const num = location.state?.num;
-    const profileExact = location.state === null ? false : true;
+    const profileExact = location.state === null ? false : location.state === undefined && true;
 
     function handleCloseModal() {
         history.goBack();

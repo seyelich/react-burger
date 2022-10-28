@@ -14,6 +14,7 @@ export const OrderInfo = () => {
     const { items } = useSelector(store => store.ingredients);
     const location = useLocation();
     const bg = location.state?.bg;
+    const { id } = useParams();
     const dispatch = useDispatch();
 
     const [ currOrder, setCurrOrder ] = useState({
@@ -24,21 +25,21 @@ export const OrderInfo = () => {
         status: ''
     });
     
-    const { id } = useParams();
     const date = currOrder.date !== '' && setDate(currOrder.date);
-    const item = ordersInfo.orders.length !== 0 ? ordersInfo.orders.find(el => el._id === id) : {
+    const item = ordersInfo?.orders ? ordersInfo?.orders.find(el => el._id === id) : {
         createdAt: '',
         ingredients: [],
         name: '',
         number: '',
         status: ''
     };
+
     const total = countPriceForFeed(setOrderIngrs(item?.ingredients, items));
     const { qty } = setItems(setOrderIngrs(item?.ingredients, items));
     
     useEffect(() => {
-            dispatch(isProfile ? { type: WS_CONNECTION_START_AUTH } : { type: WS_CONNECTION_START });
-            return dispatch(isProfile ? { type: WS_CONNECTION_CLOSED_AUTH } : { type: WS_CONNECTION_CLOSED });
+            dispatch(isProfile ? { type: WS_CONNECTION_START_AUTH } : { type: WS_CONNECTION_START, payload: '/all' });
+            return () => dispatch(isProfile ? { type: WS_CONNECTION_CLOSED_AUTH } : { type: WS_CONNECTION_CLOSED });
         },
         [dispatch, isProfile]
     );
@@ -52,7 +53,7 @@ export const OrderInfo = () => {
             ingrs: Array.from(new Set(setOrderIngrs(item?.ingredients, items))),
             status: setStatusText(item?.status),
         });
-    }, [ordersInfo.orders]);
+    }, [ordersInfo?.orders]);
 
     return (
         ordersInfo

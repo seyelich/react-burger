@@ -15,10 +15,13 @@ import { getOrder } from "../../services/actions/modals";
 
 export default function BurgerConsrtuctor({onDropHandler}) {
     const { chosenItems, price} = useSelector(store => store.burderConstructor);
-    const ids = chosenItems.map((el) => el._id);
+
     const [visibility, setVisibility] = useState(false);
+    
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const ids = chosenItems.map((el) => el._id);
 
     const moveItem = useCallback((dragIndex, hoverIndex) => {
         dispatch({

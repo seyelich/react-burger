@@ -1,34 +1,25 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { getCookie } from "../../utils/utils";
 import { login } from "../../services/actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 export default function LoginPage() {
-    const [ form, setForm ] = useState({
-        email: '',
-        pw: ''
-    });
+    const { values, handleChange } = useForm({ email: '', pw: ''});
+    const { user } = useSelector(store => store.user);
 
     const dispatch = useDispatch();
-    const history = useHistory();
-
-    const onFormChange = (e) => {
-        setForm({
-            ...form, 
-            [e.target.name]: e.target.value
-        });
-    }
+    const location = useLocation();
 
     const onFormSubmit = (e) => {
         e.preventDefault();
-        dispatch(login(form, () => history.replace({ pathname: '/' })));
+        dispatch(login(values));
     }
 
-    if(getCookie('refreshToken')) {
+    if(getCookie('accessToken') || user) {
         return (
-            <Redirect to={{pathname: '/'}}/>
+            <Redirect to={location?.state?.from.pathname || '/'} />
         )
     }
 
@@ -37,8 +28,8 @@ export default function LoginPage() {
             <h1 className='text text_type_main-medium'>Вход</h1>
             <form className="form" onSubmit={onFormSubmit}>
                 <fieldset className="fieldset mb-6 mt-6">
-                    <Input type="email" placeholder="E-mail" name="email" value={form.email} onChange={onFormChange} />
-                    <PasswordInput value={form.pw} name="pw" onChange={onFormChange} />
+                    <Input type="email" placeholder="E-mail" name="email" value={values.email} onChange={handleChange} />
+                    <PasswordInput value={values.pw} name="pw" onChange={handleChange} />
                 </fieldset>
                 <Button type='primary' size="large" htmlType="submit">Войти</Button>
             </form>

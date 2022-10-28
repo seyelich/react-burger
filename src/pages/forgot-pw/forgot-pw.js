@@ -1,27 +1,23 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { getCookie } from "../../utils/utils";
 import { forgotPw } from "../../services/actions/auth";
 import styles from './forgot-pw.module.css';
+import { useForm } from "../../hooks/useForm";
 
 export default function ForgotPwPage() {
-    const [ form, setForm ] = useState('');
-
+    const { values, handleChange } = useForm({email: ''});
+    
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const onFormChange = (e) => {
-        setForm(e.target.value)
-    }
-
     const onFormSubmit = (e) => {
         e.preventDefault();
-        dispatch(forgotPw(form, () => history.replace({ pathname: '/reset-password' })));
+        dispatch(forgotPw(values.email, () => history.replace({ pathname: '/reset-password' })));
     }
 
-    if(getCookie('refreshToken')) {
+    if(getCookie('accessToken')) {
         return (
             <Redirect to={{pathname: '/'}}/>
         )
@@ -32,7 +28,7 @@ export default function ForgotPwPage() {
             <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
             <form className={styles.form} onSubmit={onFormSubmit}>
                 <fieldset className={`${styles.fieldset} mb-6 mt-6`}>
-                    <Input type="email" placeholder="Укажите e-mail" value={form} onChange={onFormChange} />
+                    <Input type="email" name="email" placeholder="Укажите e-mail" value={values.email} onChange={handleChange} />
                 </fieldset>
                 <Button type='primary' size="large" htmlType="submit">Восстановить</Button>
             </form>
