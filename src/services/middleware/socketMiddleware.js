@@ -1,4 +1,5 @@
 import { getCookie } from "../../utils/utils";
+import { getToken } from "../actions/auth";
 
 export const socketMiddleware = (wsUrl, wsActions, isAuth) => {
     return store => {
@@ -35,6 +36,9 @@ export const socketMiddleware = (wsUrl, wsActions, isAuth) => {
                 socket.onmessage = event => {
                     const { data } = event;
                     const { success, ...info } = JSON.parse(data);
+                    if(info.message === 'Invalid or missing token' && !!getCookie('refreshToken')) {
+                        dispatch(getToken());
+                    }
                     dispatch({ type: onMessage, payload: info });
                 };
 

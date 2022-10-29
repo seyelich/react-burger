@@ -15,6 +15,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { FeedPage } from '../../pages/feed/feed';
 import { OrderInfo } from '../order-info/order-info';
+import { deleteCookie } from '../../utils/utils';
 
 export default function App() {
     const dispatch = useDispatch();
