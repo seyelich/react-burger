@@ -1,5 +1,5 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from 'react-router-dom';
 import { getCookie } from "../../utils/utils";
 import { register } from "../../services/actions/auth";
@@ -7,6 +7,7 @@ import { useForm } from "../../hooks/useForm";
 
 export default function RegisterPage() {
     const dispatch = useDispatch();
+    const { user } = useSelector(store => store.user);
     
     const { values, handleChange } = useForm({
         name: '',
@@ -19,7 +20,7 @@ export default function RegisterPage() {
         dispatch(register(values));
     }
 
-    if(getCookie('accessToken')) {
+    if(getCookie('accessToken') || user) {
         return (
             <Redirect to={'/'} />
         )
