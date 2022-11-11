@@ -4,9 +4,9 @@ import styles from './modal.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import React from "react";
 import PropTypes from 'prop-types';
-import { modalRoot } from "../utils/utils";
+import { modalRoot } from "../../utils/constants";
 
-export default function Modal({ handleClose, title, children, hasOverlay }) {
+export default function Modal({ handleClose, title, children, hasOverlay, titleClassName }) {
     function handleKeydown(e) {
         return e.key === 'Escape' && handleClose();
     }
@@ -24,7 +24,7 @@ export default function Modal({ handleClose, title, children, hasOverlay }) {
             <>
                 {hasOverlay && <ModalOverlay handleClose={handleClose} />}
                 <div className={styles.modal} >
-                    <h2 className={title && `${styles.title} text text_type_main-large mt-10`}>{title}</h2>
+                    <h2 className={title && `${styles.title} text ${titleClassName} mt-10`}>{title}</h2>
                     { children }
                     <button onClick={handleClose} className={styles.button} >
                         <CloseIcon type="primary" />
@@ -39,5 +39,6 @@ export default function Modal({ handleClose, title, children, hasOverlay }) {
 Modal.propTypes = {
     handleClose: PropTypes.func.isRequired,
     title: PropTypes.string,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    titleClassName: PropTypes.string
 }

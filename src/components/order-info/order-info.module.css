@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 640px;
+}
+
+.container_noModal {
+    composes: container;
+    margin: 122px auto;
+}
+
+.num {
+    align-self: center;
+}
+
+.status_type_done {
+    color: #00CCCC;
+}
+
+.list {
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
+    max-height: 312px;
+}
+
+.listItem {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    align-items: center;
+}
+
+.totalCont {
+    display: flex;
+    justify-content: space-between;
+}
+
+.total {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.price {
+    composes: total;
+    margin-left: auto;
+}
+
+.ingrCont {
+    position: relative;
+    width: 68px;
+    height: 68px;
+}
+
+.img {
+    width: 112px;
+}

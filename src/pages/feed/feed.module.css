@@ -1,0 +1,52 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.container {
+    display: flex;
+}
+
+.list {
+    width: 584px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.status {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.numsStatus {
+    display: flex;
+    gap: 36px;
+}
+
+.number {
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.numsList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, min-content);
+    grid-template-rows: repeat(10, min-content);
+    gap: 8px;
+    max-height: 313px;
+    min-width: 280px;
+}
+
+.color {
+    color: #00CCCC;
+}

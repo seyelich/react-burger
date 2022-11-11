@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    margin: 40px auto auto 380px ;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.links {
+    width: 320px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    margin: 0;
+}
+
+.btn {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}

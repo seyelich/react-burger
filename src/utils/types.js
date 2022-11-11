@@ -15,4 +15,14 @@ export const itemPropTypes = PropTypes.shape({
     __v: PropTypes.number,
 })
 
+export const orderPropTypes = PropTypes.shape({
+    createdAt: PropTypes.string.isRequired, 
+    ingredients: PropTypes.array.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired
+})
+
 export const dataPropTypes = PropTypes.arrayOf(itemPropTypes.isRequired)

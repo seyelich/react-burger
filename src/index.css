@@ -6,6 +6,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 7;
 }
 
 .default-section {
@@ -26,4 +27,62 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: #8585AD;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 480px;
+    margin: 180px auto;
+}
+
+.form {
+    display: flex; /*delete*/
+    flex-direction: column;
+    align-items: center;
+}
+
+.fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    gap: 24px;
+}
+
+.link {
+    color: #4C4CFF;
+    text-decoration: none;
+}
+
+.ingr {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    background: #131316;
+    border-radius: 100%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.bg {
+    width: 68px;
+    height: 68px;
+    background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+    border-radius: 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+.loading {
+    margin: 0 50%;
 }

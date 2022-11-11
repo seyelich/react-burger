@@ -4,7 +4,7 @@ import BurgerConsrtuctor from "../constuctor/contructor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch } from 'react-redux';
-import { GET_CHOSEN_ITEMS, makeKey } from '../../services/actions/constructor';
+import { GET_CHOSEN_ITEMS } from '../../services/actions/constructor';
 import { INCREASE_ITEM } from '../../services/actions/ingredients';
 import { v4 } from 'uuid';
 

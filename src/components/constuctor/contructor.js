@@ -5,16 +5,23 @@ import styles from './constructor.module.css';
 import PriceContainer from "../price/price";
 import ConstructorItem from "../constructor-item/constructor-item";
 import OrderDetails from "../order-details/order-details";
-import { countPrice } from '../utils/utils';
+import { countPrice, getCookie } from '../../utils/utils';
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { MOVE_ITEM, SET_TOTAL_PRICE } from "../../services/actions/constructor";
+import { useHistory } from 'react-router-dom';
+import { getOrder } from "../../services/actions/modals";
 
 export default function BurgerConsrtuctor({onDropHandler}) {
     const { chosenItems, price} = useSelector(store => store.burderConstructor);
+
     const [visibility, setVisibility] = useState(false);
+    
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const ids = chosenItems.map((el) => el._id);
 
     const moveItem = useCallback((dragIndex, hoverIndex) => {
         dispatch({
@@ -32,7 +39,13 @@ export default function BurgerConsrtuctor({onDropHandler}) {
     })
 
     function handleOpenModal() {
-        setVisibility(true)
+        if(getCookie('refreshToken')) {
+            setVisibility(true);
+            dispatch(getOrder(ids));
+        }
+        else {
+            history.replace({ pathname: '/login' })
+        }
     }
 
     function handleCloseModal() {
@@ -101,8 +114,8 @@ export default function BurgerConsrtuctor({onDropHandler}) {
             }
 
             <div className={`${styles.priceContainer} mt-10 mr-4`}>
-                <PriceContainer total={price} />
-                <Button type="primary" size="large" onClick={handleOpenModal} disabled={chosenItems.find(el => el.type === 'bun') === undefined} >Оформить заказ</Button>
+                <PriceContainer total={price} size="m" />
+                <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal} disabled={chosenItems.find(el => el.type === 'bun') === undefined} >Оформить заказ</Button>
             </div>
             {visibility && modal}
         </section>

@@ -2,14 +2,11 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef, useState } from 'react';
 import ingredientsStyles from './ingredients.module.css';
 import BurgerIngredient from "../ingredient/ingredient";
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import Modal from "../modal/modal";
-import { useDispatch, useSelector } from 'react-redux';
-import { ADD_ITEM_INFO, DELETE_ITEM_INFO } from '../../services/actions/modals';
+import { useSelector } from 'react-redux';
 
 export default function BurgerIngredients() {
     const [ current, setCurrent ] = useState('buns');
-    const [visibility, setVisibility] = useState(false);
+    const { items, itemsRequest } = useSelector(store => store.ingredients);
 
     const bunsRef = useRef(null);
     const saucesRef = useRef(null);
@@ -21,20 +18,6 @@ export default function BurgerIngredients() {
         val === 'buns' && bunsRef.current.scrollIntoView({behavior: 'smooth'});
         val === 'sauces' && saucesRef.current.scrollIntoView({behavior: 'smooth'});
         val === 'fillings' && fillingsRef.current.scrollIntoView({behavior: 'smooth'});
-    }
-
-    const dispatch = useDispatch();
-
-    const { items, itemsRequest } = useSelector(store => store.ingredients);
-    
-    function handleClick(item) {
-        setVisibility(true);
-        dispatch({type: ADD_ITEM_INFO, payload: item});
-    }
-
-    function handleCloseModal() {
-        setVisibility(false);
-        dispatch({type: DELETE_ITEM_INFO});
     }
 
     function handleScroll() {
@@ -52,17 +35,11 @@ export default function BurgerIngredients() {
             setCurrent('fillings')
         }
     }
-
-    const modal = (
-        <Modal handleClose={handleCloseModal} title='Детали ингредиента' hasOverlay={true}>
-            <IngredientDetails /> 
-        </Modal>
-    )
     
     function filterData(data, type) {
         return data
             .filter((item) => item.type === type)
-            .map((el) => <BurgerIngredient key={el._id} item={el} handleClick={() => handleClick(el)} />)
+            .map((el) => <BurgerIngredient key={el._id} item={el} />)
     }
 
     return (
@@ -87,7 +64,7 @@ export default function BurgerIngredients() {
                 <li ref={bunsRef}>
                     <h3 className="text text_type_main-medium">Булки</h3>
                     {
-                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> 
+                        itemsRequest ? <p className="loading text text_type_main-large">...</p> 
                         : <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
                             { filterData(items, 'bun') }
                         </ul>
@@ -97,7 +74,7 @@ export default function BurgerIngredients() {
                 <li ref={saucesRef}>
                     <h3 className="text text_type_main-medium">Соусы</h3>
                     {
-                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        itemsRequest ? <p className="loading text text_type_main-large">...</p> :
                         <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
                             { filterData(items, 'sauce') }
                         </ul>
@@ -107,14 +84,13 @@ export default function BurgerIngredients() {
                 <li ref={fillingsRef}>
                     <h3 className="text text_type_main-medium">Начинка</h3>
                     {
-                        itemsRequest ? <p className={`${ingredientsStyles.loading} text text_type_main-large`}>...</p> :
+                        itemsRequest ? <p className="loading text text_type_main-large">...</p> :
                         <ul className={`${ingredientsStyles.ingredientsList} mr-2 ml-4 mt-6 default-list`}>
                             { filterData(items, 'main') }
                         </ul>
                     }
                 </li>
             </ul>
-            {visibility && modal}
         </section>
     )
 }
