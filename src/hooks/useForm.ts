@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { TUser } from "../types";
 
 export function useForm(inputValues: {[name: string]: string}) {
     const [values, setValues] = useState(inputValues);

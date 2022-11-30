@@ -13,6 +13,7 @@ import {
 } from '../constants/auth';
 import { AppDispatch, AppThunk } from '../types';
 import { TUser } from '../../types';
+import { cookieLiveTime } from '../../utils/constants';
 
 export interface IRegisterAction {
     readonly type: typeof REGISTER
@@ -162,7 +163,7 @@ export const register: AppThunk = (form: TUser) => (dispatch: AppDispatch) => {
 
     registerUser(form).then(res => {
         if (res && res.success) {
-            setCookie('accessToken', res.accessToken, { expires: 1200 });
+            setCookie('accessToken', res.accessToken, { expires: cookieLiveTime });
             setCookie('refreshToken', res.refreshToken);
             dispatch({
                 type: REGISTER_SUCCESS,
@@ -183,7 +184,7 @@ export const login: AppThunk = (form: TUser) => (dispatch: AppDispatch) => {
 
     loginUser(form).then(res => {
         if (res && res.success) {
-            setCookie('accessToken', res.accessToken, { expires: 1200 });
+            setCookie('accessToken', res.accessToken, { expires: cookieLiveTime });
             setCookie('refreshToken', res.refreshToken);
             dispatch({
                 type: LOGIN_SUCCESS,
@@ -308,7 +309,7 @@ export const  getToken: AppThunk = () => (dispatch: AppDispatch) => {
 
     getTokenRequest().then(res => {
         if (res && res.success) {
-            setCookie('accessToken', res.accessToken, { expires: 1200 });
+            setCookie('accessToken', res.accessToken, { expires: cookieLiveTime });
             setCookie('refreshToken', res.refreshToken);
             dispatch({
                 type: REFRESH_TOKEN_SUCCESS

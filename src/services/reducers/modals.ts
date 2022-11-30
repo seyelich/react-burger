@@ -3,21 +3,13 @@ import { TModalActions } from '../actions/modals';
 import { TOrder } from '../../types';
 
 type TModalState = {
-    order: TOrder,
+    order: TOrder | null,
     orderRequest: boolean,
     orderFailed: boolean,
 }
 
 const initialState: TModalState = {
-    order: {
-        createdAt: '',
-        ingredients: [],
-        name: '',
-        number: 0,
-        status: '',
-        updatedAt: '',
-        _id: '',
-    },
+    order: null,
     orderRequest: false,
     orderFailed: false,
 }

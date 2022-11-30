@@ -1,10 +1,9 @@
 import { adress } from "./constants";
 import { getCookie } from "./utils";
-import { IGetOrderRes, IGetIngrsRes, IAuthRes, IPwRequestRes, IGetTokenRes } from '../services/types/data'
-import { TUser } from "../types";
+import { TUser, ICustomResponse, TPromiseTypes } from "../types";
 
-function checkResult(res: Response) {
-    if(res.ok) { 
+function checkResult(res: ICustomResponse<TPromiseTypes>) {
+    if(res.ok) {
         return res.json();
     }
     return Promise.reject(res)
@@ -14,11 +13,11 @@ function request(url: string, options?: RequestInit) {
     return fetch(url, options).then(checkResult)
 }
 
-export function getIngredients(): Promise<IGetIngrsRes> {
+export function getIngredients() {
     return request(`${adress}/ingredients`);
 }
 
-export function getOrderInfo(idArr: Array<string>): Promise<IGetOrderRes> {
+export function getOrderInfo(idArr: Array<string>) {
     return request(`${adress}/orders`, {
         method: 'POST',
         headers: { 
@@ -31,7 +30,7 @@ export function getOrderInfo(idArr: Array<string>): Promise<IGetOrderRes> {
     })
 }
 
-export function registerUser(user: TUser): Promise<IAuthRes> {
+export function registerUser(user: TUser) {
     return request(`${adress}/auth/register`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -43,7 +42,7 @@ export function registerUser(user: TUser): Promise<IAuthRes> {
     })
 }
 
-export function loginUser(user: TUser): Promise<IAuthRes> {
+export function loginUser(user: TUser) {
     return request(`${adress}/auth/login`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -54,7 +53,7 @@ export function loginUser(user: TUser): Promise<IAuthRes> {
     })
 }
 
-export function logoutUser(): Promise<IPwRequestRes> {
+export function logoutUser() {
     return request(`${adress}/auth/logout`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -64,7 +63,7 @@ export function logoutUser(): Promise<IPwRequestRes> {
     })
 }
 
-export function forgotPwUser(email: string): Promise<IPwRequestRes> {
+export function forgotPwUser(email: string) {
     return request(`${adress}/password-reset`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -74,7 +73,7 @@ export function forgotPwUser(email: string): Promise<IPwRequestRes> {
     })
 }
 
-export function resetPwUser(form: { pw: string, token: string}): Promise<IPwRequestRes> {
+export function resetPwUser(form: { pw: string, token: string}) {
     return request(`${adress}/password-reset/reset`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -85,7 +84,7 @@ export function resetPwUser(form: { pw: string, token: string}): Promise<IPwRequ
     })
 }
 
-export function getTokenRequest(): Promise<IGetTokenRes> {
+export function getTokenRequest() {
     return request(`${adress}/auth/token`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -95,7 +94,7 @@ export function getTokenRequest(): Promise<IGetTokenRes> {
     })
 }
 
-export function getUser(): Promise<IAuthRes> {
+export function getUser() {
     return request(`${adress}/auth/user`, {
         method: 'GET',
         headers: { 
@@ -105,7 +104,7 @@ export function getUser(): Promise<IAuthRes> {
     })
 }
 
-export function updateUserInfo(user: TUser): Promise<IAuthRes> {
+export function updateUserInfo(user: TUser) {
     return request(`${adress}/auth/user`, {
         method: 'PATCH',
         headers: { 

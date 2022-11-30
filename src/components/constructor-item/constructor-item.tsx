@@ -5,7 +5,7 @@ import { DECREASE_ITEM } from "../../services/constants/ingrs";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useRef, FC } from "react";
 import { DELETE_ITEM } from "../../services/constants/constructor";
-import { ICnstrItem, TIngr } from "../../types";
+import { ICnstrItem } from "./types";
 
 export const ConstructorItem: FC<ICnstrItem> = ({ item, index, moveItem }) => {
     const id = item._id;
@@ -19,7 +19,7 @@ export const ConstructorItem: FC<ICnstrItem> = ({ item, index, moveItem }) => {
 		},
     })
 
-    const [, drop] = useDrop<{ id: string, index: number }>({ //{ handlerId }
+    const [, drop] = useDrop<{ id: string, index: number }>({
         accept: 'constructorItem',
         collect(monitor) {
             return {
@@ -63,7 +63,7 @@ export const ConstructorItem: FC<ICnstrItem> = ({ item, index, moveItem }) => {
     }
 
     return (
-        <li className={styles.item} ref={ref}> {/*data-handler-id={handlerId} */}
+        <li className={styles.item} ref={ref}>
             <DragIcon type="primary" />
             <ConstructorElement
                 handleClose={handleClose}

@@ -13,7 +13,7 @@ const initialState: TCnstrState = {
 }
 
 export const constructorReducer = (state = initialState, action: TCnstrActions) => {
-    function addBun(state: typeof initialState, action: IGetChosenItemsAction) {
+    function addBun(state: TCnstrState, action: IGetChosenItemsAction) {
         const index = [...state.chosenItems].findIndex((el) => el.type === 'bun');
         const newState = [...state.chosenItems];
     

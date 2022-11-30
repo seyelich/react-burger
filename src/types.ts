@@ -1,3 +1,5 @@
+import { IGetOrderRes, IGetIngrsRes, IAuthRes, IPwRequestRes, IGetTokenRes } from './services/types/data'
+
 export type TIngr = {
     _id: string,
     name: string,
@@ -25,23 +27,16 @@ export type TOrder = {
     _id: string
 }
 
-export interface ICnstrItem {
-    item: TIngr,
-    index: number,
-    moveItem: (dragIndex: number, hoverIndex: number) => void
-}
-
-export interface IModal extends React.HTMLAttributes<HTMLDivElement> { //?????
-    handleClose: () => void, 
-    title?: string, 
-    hasOverlay: boolean,
-    titleClassName?: string,
-}
-
 export type TSetCookieProps = {[props: string]: string | boolean | number | Date | null} //КОСТЫЛЬ
 
 export type TUser = {
-    email?: string,
-    pw?: string,
+    email: string,
+    pw: string,
     name: string
-} | {[field: string]: string}
+}
+
+export interface ICustomResponse<T> extends Response {
+    json(): Promise<T>;
+}
+
+export type TPromiseTypes = IGetOrderRes & IGetIngrsRes & IAuthRes & IPwRequestRes & IGetTokenRes;

@@ -1,7 +1,7 @@
 import { TIngr, TOrder, TUser } from "../../types"
 
 export interface IGetIngrsRes {
-    data: ReadonlyArray<TIngr>, //Readonly
+    data: ReadonlyArray<TIngr>,
     success: boolean
 }
 
@@ -30,8 +30,7 @@ export interface IGetTokenRes {
   }
 
 export interface IOrdersInfo {
-    orders: Array<TOrder>, //
+    orders: Array<TOrder>,
     total: string,
     totalToday: string
 }
-

@@ -4,9 +4,10 @@ import ingredientsStyles from './ingredients.module.css';
 import { BurgerIngredient } from "../ingredient/ingredient";
 import { useSelector } from '../../services/hooks';
 import { TIngr } from '../../types';
+import { Tabs } from '../../utils/constants';
 
 export default function BurgerIngredients() {
-    const [ current, setCurrent ] = useState('buns');
+    const [ current, setCurrent ] = useState(Tabs.BUNS);
     const { items, itemsRequest } = useSelector(store => store.ingredients);
 
     const bunsRef = useRef<HTMLLIElement>(null);
@@ -16,27 +17,27 @@ export default function BurgerIngredients() {
 
     const tabHandleClick = (val: string) => {
         setCurrent(val)
-        if (bunsRef && saucesRef && fillingsRef && bunsRef.current && saucesRef.current && fillingsRef.current) {
-            val === 'buns' && bunsRef.current.scrollIntoView({behavior: 'smooth'});
-            val === 'sauces' && saucesRef.current.scrollIntoView({behavior: 'smooth'});
-            val === 'fillings' && fillingsRef.current.scrollIntoView({behavior: 'smooth'});
+        if (bunsRef.current && saucesRef.current && fillingsRef.current) {
+            val === Tabs.BUNS && bunsRef.current.scrollIntoView({behavior: 'smooth'});
+            val === Tabs.SAUCES && saucesRef.current.scrollIntoView({behavior: 'smooth'});
+            val === Tabs.FILLINGS && fillingsRef.current.scrollIntoView({behavior: 'smooth'});
         }
     }
 
     function handleScroll() {
-        if (bunsRef && saucesRef && fillingsRef && bunsRef.current && saucesRef.current && fillingsRef.current && containerRef && containerRef.current) {
+        if (bunsRef.current && saucesRef.current && fillingsRef.current && containerRef.current) {
             const bunsDistance = Math.abs(bunsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
             const saucesDistance = Math.abs(saucesRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
             const fillingsDistance = Math.abs(fillingsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
             
             if(bunsDistance<saucesDistance) {
-                setCurrent('buns')
+                setCurrent(Tabs.BUNS)
             }
             else if(saucesDistance<fillingsDistance) {
-                setCurrent('sauces')
+                setCurrent(Tabs.SAUCES)
             }
             else if(fillingsDistance<bunsDistance) {
-                setCurrent('fillings')
+                setCurrent(Tabs.FILLINGS)
             }
         }
     }
@@ -52,16 +53,16 @@ export default function BurgerIngredients() {
             <h2 className="text text_type_main-large mb-5 mt-10">Соберите бургер</h2>
             <menu className="default-list mb-10 mt-5">
                 <li >
-                    <Tab value="buns" active={current === 'buns'} onClick={tabHandleClick}>Булки</Tab>
+                    <Tab value={Tabs.BUNS} active={current === Tabs.BUNS} onClick={tabHandleClick}>Булки</Tab>
                 </li>
 
                 <li>
-                    <Tab value="sauces" active={current === 'sauces'} onClick={tabHandleClick}>Соусы</Tab>
+                    <Tab value={Tabs.SAUCES} active={current === Tabs.SAUCES} onClick={tabHandleClick}>Соусы</Tab>
 
                 </li>
 
                 <li>
-                    <Tab value="fillings" active={current === 'fillings'} onClick={tabHandleClick}>Начинки</Tab>
+                    <Tab value={Tabs.FILLINGS} active={current === Tabs.FILLINGS} onClick={tabHandleClick}>Начинки</Tab>
                 </li>
             </menu>
 

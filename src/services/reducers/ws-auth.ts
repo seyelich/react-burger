@@ -9,17 +9,13 @@ import { IOrdersInfo } from '../types/data';
   
 type TWsAuthState = {
     wsConnected: boolean,
-    ordersInfo: IOrdersInfo,
+    ordersInfo: IOrdersInfo | null,
     error: undefined | string
 }
 
 const initialState: TWsAuthState = {
     wsConnected: false,
-    ordersInfo: {
-        orders: [],
-        total: '',
-        totalToday: ''
-    },
+    ordersInfo: null,
     error: undefined
 };
 

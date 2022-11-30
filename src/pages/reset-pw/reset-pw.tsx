@@ -24,7 +24,7 @@ export default function ResetPwPage() {
         )
     }
 
-    if(!user?.email) {
+    if(!user.email) {
         return (
             <Redirect to={{pathname: '/forgot-password'}}/>
         )

@@ -4,7 +4,7 @@ import styles from './modal.module.css';
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import React, { FC } from "react";
 import { modalRoot } from "../../utils/constants";
-import { IModal } from "../../types";
+import { IModal } from "./types";
 
 export const Modal: FC<IModal> = ({ handleClose, title, children, hasOverlay, titleClassName }) => {
     function handleKeydown(e: KeyboardEvent ) {

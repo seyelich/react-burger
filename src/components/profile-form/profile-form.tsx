@@ -35,11 +35,11 @@ export const ProfileForm = () => {
     useEffect(() => {
         dispatch(getUserInfo());
         user && setValues({
-            name: user?.name,
-            email: user?.email!,
-            pw: user?.pw ? user?.pw : ''
+            name: user.name,
+            email: user.email,
+            pw: user.pw ? user.pw : ''
         });
-    }, [dispatch, user?.name, user?.email, user?.pw ]);
+    }, [dispatch, user.name, user.email, user.pw ]);
 
     const onFormSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -53,9 +53,9 @@ export const ProfileForm = () => {
 
     const onFormReset = () => {
         setValues({
-            name: user?.name,
-            email: user?.email!,
-            pw: user?.pw!
+            name: user.name,
+            email: user.email,
+            pw: user.pw
         });
         makeDisabled();
     }

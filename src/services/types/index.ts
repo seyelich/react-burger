@@ -7,10 +7,11 @@ import { TWsAuthActions } from '../actions/ws-auth';
 import { store } from '../store';
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
+import { rootReducer } from '../reducers';
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 
-type TApplicationActions = 
+export type TApplicationActions = 
     | TAuthActions
     | TCnstrActions
     | TIngrsActions

@@ -1,10 +1,11 @@
 import { getCookie } from "../../utils/utils";
 import { getToken } from "../actions/auth";
-import { TWsActionsDefault } from "../types";
+import { AppThunk, TWsActionsDefault } from "../types";
 import { MiddlewareAPI, AnyAction } from "redux";
+import { Dispatch } from "react";
 
 export const socketMiddleware = (wsUrl: string, wsActions: TWsActionsDefault, isAuth: boolean) => {
-    return (store: MiddlewareAPI) => {
+    return (store: MiddlewareAPI<Dispatch<TWsActionsDefault> & AppThunk>) => {
         let socket: WebSocket | null = null;
 
         return (next: (act: AnyAction) => void) => (action: AnyAction) => {
@@ -38,9 +39,9 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWsActionsDefault, is
                 socket.onmessage = event => {
                     const { data } = event;
                     const { success, ...info } = JSON.parse(data);
-                    // if(info.message === 'Invalid or missing token' && !!getCookie('refreshToken')) {
-                    //     dispatch(getToken());
-                    // }
+                    if(info.message === 'Invalid or missing token' && !!getCookie('refreshToken')) {
+                        dispatch(getToken());
+                    }
                     dispatch({ type: onMessage, payload: info });
                 };
 
