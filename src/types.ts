@@ -1,5 +1,3 @@
-import { IGetOrderRes, IGetIngrsRes, IAuthRes, IPwRequestRes, IGetTokenRes } from './services/types/data'
-
 export type TIngr = {
     _id: string,
     name: string,
@@ -27,16 +25,14 @@ export type TOrder = {
     _id: string
 }
 
-export type TSetCookieProps = {[props: string]: string | boolean | number | Date | null} //КОСТЫЛЬ
-
 export type TUser = {
     email: string,
     pw: string,
     name: string
 }
 
-export interface ICustomResponse<T> extends Response {
-    json(): Promise<T>;
-}
+export type TSetCookieProps = {[props: string]: string | boolean | number | Date | null} //КОСТЫЛЬ
 
-export type TPromiseTypes = IGetOrderRes & IGetIngrsRes & IAuthRes & IPwRequestRes & IGetTokenRes;
+export type TResponse<T> = {
+    success: boolean;
+} & T;

@@ -1,24 +1,23 @@
 import { adress } from "./constants";
 import { getCookie } from "./utils";
-import { TUser, ICustomResponse, TPromiseTypes } from "../types";
+import { TUser } from "../types";
+import { IAuthRes, IGetIngrsRes, IGetOrderRes, IGetTokenRes, IPwRequestRes } from "../services/types/data";
+import { TResponse } from '../types'
 
-function checkResult(res: ICustomResponse<TPromiseTypes>) {
-    if(res.ok) {
-        return res.json();
-    }
-    return Promise.reject(res)
-}
-
-function request(url: string, options?: RequestInit) {
-    return fetch(url, options).then(checkResult)
+const checkResponse = <T>(res: Response) => {
+    return res.ok ? res.json().then(data => data as TResponse<T>) : Promise.reject(res.status);
+};
+  
+function request<T>(url: string, options?: RequestInit) {
+    return fetch(url, options).then(res => checkResponse<T>(res))
 }
 
 export function getIngredients() {
-    return request(`${adress}/ingredients`);
+    return request<IGetIngrsRes>(`${adress}/ingredients`);
 }
 
 export function getOrderInfo(idArr: Array<string>) {
-    return request(`${adress}/orders`, {
+    return request<IGetOrderRes>(`${adress}/orders`, {
         method: 'POST',
         headers: { 
             "Content-Type": "application/json",
@@ -31,7 +30,7 @@ export function getOrderInfo(idArr: Array<string>) {
 }
 
 export function registerUser(user: TUser) {
-    return request(`${adress}/auth/register`, {
+    return request<IAuthRes>(`${adress}/auth/register`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -43,7 +42,7 @@ export function registerUser(user: TUser) {
 }
 
 export function loginUser(user: TUser) {
-    return request(`${adress}/auth/login`, {
+    return request<IAuthRes>(`${adress}/auth/login`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -54,7 +53,7 @@ export function loginUser(user: TUser) {
 }
 
 export function logoutUser() {
-    return request(`${adress}/auth/logout`, {
+    return request<IPwRequestRes>(`${adress}/auth/logout`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -64,7 +63,7 @@ export function logoutUser() {
 }
 
 export function forgotPwUser(email: string) {
-    return request(`${adress}/password-reset`, {
+    return request<IPwRequestRes>(`${adress}/password-reset`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -74,7 +73,7 @@ export function forgotPwUser(email: string) {
 }
 
 export function resetPwUser(form: { pw: string, token: string}) {
-    return request(`${adress}/password-reset/reset`, {
+    return request<IPwRequestRes>(`${adress}/password-reset/reset`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -85,7 +84,7 @@ export function resetPwUser(form: { pw: string, token: string}) {
 }
 
 export function getTokenRequest() {
-    return request(`${adress}/auth/token`, {
+    return request<IGetTokenRes>(`${adress}/auth/token`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -95,7 +94,7 @@ export function getTokenRequest() {
 }
 
 export function getUser() {
-    return request(`${adress}/auth/user`, {
+    return request<IAuthRes>(`${adress}/auth/user`, {
         method: 'GET',
         headers: { 
             "Content-Type": "application/json",
@@ -105,7 +104,7 @@ export function getUser() {
 }
 
 export function updateUserInfo(user: TUser) {
-    return request(`${adress}/auth/user`, {
+    return request<IAuthRes>(`${adress}/auth/user`, {
         method: 'PATCH',
         headers: { 
             "Content-Type": "application/json",

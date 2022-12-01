@@ -5,7 +5,13 @@ import { DECREASE_ITEM } from "../../services/constants/ingrs";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useRef, FC } from "react";
 import { DELETE_ITEM } from "../../services/constants/constructor";
-import { ICnstrItem } from "./types";
+import { TIngr } from "../../types"
+
+export interface ICnstrItem {
+    item: TIngr,
+    index: number,
+    moveItem: (dragIndex: number, hoverIndex: number) => void
+}
 
 export const ConstructorItem: FC<ICnstrItem> = ({ item, index, moveItem }) => {
     const id = item._id;
